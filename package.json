@@ -1,6 +1,6 @@
 {
   "name": "react-native-reanimated-chrono",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A reanimated library for displaying timer, stopwatch and time.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -34,7 +34,7 @@
   "scripts": {
     "example": "yarn workspace react-native-reanimated-chrono-example",
     "test": "jest",
-    "typecheck": "tsc",
+    "typecheck": "tsc --skipLibCheck --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",

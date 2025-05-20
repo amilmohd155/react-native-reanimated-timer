@@ -174,6 +174,10 @@ const StopWatchComponent = forwardRef<Stopwatch, StopwatchProps>(
   }
 );
 
+/**
+ * Stopwatch component that displays elapsed time in a digital format.
+ * It can be started, paused, and reset.
+ */
 const Stopwatch = memo(StopWatchComponent);
 Stopwatch.displayName = 'Stopwatch';
 

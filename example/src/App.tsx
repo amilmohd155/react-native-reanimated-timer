@@ -18,6 +18,7 @@ export default function App() {
       <Text style={styles.label}>Timer</Text>
       <Text>1 days 1 hours 30 minutes</Text>
       <Timer
+        showDays
         ref={timerRef}
         autoStart={false}
         durationMs={durationMs}

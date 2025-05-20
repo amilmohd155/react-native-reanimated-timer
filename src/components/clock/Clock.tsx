@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Digit, DigitConfigContext } from '../digit';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
 import {
+  DEFAULT_INTERVAL_MS,
   DEFAULT_SEPARATOR,
   DEFAULT_SHOW_HOURS,
   DEFAULT_SHOW_MILLISECONDS,
@@ -21,6 +22,7 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
   (
     {
       format = '24',
+      intervalMs: interval = DEFAULT_INTERVAL_MS,
 
       animationDelay,
       animationDuration,
@@ -47,7 +49,7 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
     },
     _
   ) => {
-    const { getSnapshotAsDigits } = useTime({ format });
+    const { getSnapshotAsDigits } = useTime({ format, interval });
 
     const {
       hoursTens,
@@ -145,6 +147,12 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
   }
 );
 
+/**
+ * Clock component to display the current time.
+ * It can be configured to show hours, minutes, seconds, and milliseconds.
+ * The time format can be set to either 12-hour or 24-hour format.
+ * The component supports custom animations and styles.
+ */
 const Clock = memo(ClockComponent);
 Clock.displayName = 'Clock';
 

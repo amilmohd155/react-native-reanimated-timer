@@ -174,8 +174,13 @@ function TimerComponent(
   );
 }
 
+/**
+ * Timer component that counts down from a specified duration.
+ * It provides methods to start, pause, resume, and reset the timer.
+ *
+ * @prop {number} durationMs - The duration in milliseconds to count down from. @required
+ */
 const Timer = forwardRef<Timer, TimerProps>(TimerComponent);
-
 Timer.displayName = 'Timer';
 
 export default Timer;
