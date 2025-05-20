@@ -47,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amilmohd155/react-native-reanimated-chrono.git"
+    "url": "git+https://github.com/amilmohd155/reanimated-chrono.git"
   },
   "author": "Amil Muhammed Hamza <amilmohd155@gmail.com> (https://github.com/amilmohd155)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amilmohd155/react-native-reanimated-chrono/issues"
+    "url": "https://github.com/amilmohd155/reanimated-chrono/issues"
   },
-  "homepage": "https://github.com/amilmohd155/react-native-reanimated-chrono#readme",
+  "homepage": "https://github.com/amilmohd155/reanimated-chrono#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -120,7 +120,7 @@
     "plugins": {
       "@release-it/conventional-changelog": {
         "preset": {
-          "name": "angular"
+          "name": "conventionalcommits"
         }
       }
     }
