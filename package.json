@@ -15,21 +15,9 @@
   "files": [
     "src",
     "lib",
-    "android",
-    "ios",
-    "cpp",
-    "*.podspec",
-    "react-native.config.js",
-    "!ios/build",
-    "!android/build",
-    "!android/gradle",
-    "!android/gradlew",
-    "!android/gradlew.bat",
-    "!android/local.properties",
     "!**/__tests__",
     "!**/__fixtures__",
-    "!**/__mocks__",
-    "!**/.*"
+    "!**/__mocks__"
   ],
   "scripts": {
     "example": "yarn workspace react-native-reanimated-chrono-example",
@@ -37,13 +25,20 @@
     "typecheck": "tsc --skipLibCheck --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
-    "prepare": "bob build",
-    "release": "release-it --only-version"
+    "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" lib/typescript/src",
+    "prepare": "bob build && yarn copy-dts",
+    "release": "rm -rf lib && yarn prepare && release-it"
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android"
+    "reanimated",
+    "chrono",
+    "timer",
+    "stopwatch",
+    "time",
+    "clock",
+    "countdown",
+    "expo"
   ],
   "repository": {
     "type": "git",
@@ -71,6 +66,7 @@
     "@types/jest": "^29.5.5",
     "@types/react": "^19.0.12",
     "commitlint": "^19.6.1",
+    "copyfiles": "^2.4.1",
     "del-cli": "^5.1.0",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
