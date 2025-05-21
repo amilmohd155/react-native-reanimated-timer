@@ -5,6 +5,16 @@ import type {
   VisibilityProps,
 } from '../../types';
 
+/**
+ * Stopwatch component props
+ * @interface StopwatchProps
+ * @extends { VisibilityProps }
+ * @extends { AnimationProps }
+ * @extends { CommonStylingProps }
+ * @prop {boolean} autoStart - Whether to start the stopwatch automatically.
+ * @prop {Date} offsetTimestamp - The offset timestamp to start the stopwatch from.
+ * @prop {number} intervalMs - The interval in milliseconds to update the stopwatch.
+ */
 interface StopwatchProps
   extends VisibilityProps,
     AnimationProps,
@@ -26,6 +36,14 @@ interface StopwatchProps
   intervalMs?: number;
 }
 
+/**
+ * Stopwatch methods
+ * @interface StopwatchMethods
+ * @prop {() => void} start - Starts the stopwatch.
+ * @prop {() => void} pause - Pauses the stopwatch.
+ * @prop {(autoStart?: boolean, offset?: Date) => void} reset - Resets the stopwatch.
+ * @prop {() => Time} getSnapshot - Gets the current time snapshot from the stopwatch.
+ */
 interface StopwatchMethods {
   /** Starts the stopwatch
    * @returns {void}
