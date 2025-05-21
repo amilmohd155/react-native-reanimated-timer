@@ -5,6 +5,8 @@
 
 A Reanimated-powered library for creating smooth and customizable timers, stopwatches, and time displays in React Native. ⏳
 
+![React Native Reanimated Chrono](./preview.gif)
+
 ## Features
 
 - ⚡ **High Performance** – Achieves smooth 60FPS animations using Reanimated
@@ -39,6 +41,8 @@ npm install react-native-reanimated-chrono
 > Refer to the [Reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started) if you haven’t already set it up.
 
 ## Usage
+
+[Check out this example Snack](https://snack.expo.dev/@docren155/react-native-reanimated-chrono)
 
 ## Timer
 
@@ -147,7 +151,6 @@ Clock component to display the current time.
 
 - It can be configured to show hours, minutes, seconds, and milliseconds.
 - The time format can be set to either 12-hour or 24-hour format.
-- The component supports custom animations and styles.
 
 ### Props
 
