@@ -49,7 +49,7 @@ const StopWatchComponent = forwardRef<Stopwatch, StopwatchProps>(
 
       digitContainerStyle,
       digitStyle,
-      millisecondsStyle,
+      // millisecondsStyle,
     },
     ref
   ) => {
@@ -161,7 +161,7 @@ const StopWatchComponent = forwardRef<Stopwatch, StopwatchProps>(
                 style={[
                   styles.milliseconds,
                   digitStyleWithoutWidth,
-                  millisecondsStyle,
+                  // millisecondsStyle,
                 ]}
               >
                 {String(milliseconds).padStart(3, '0')}

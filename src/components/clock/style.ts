@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   separator: {
     textAlign: 'center',
   },
-  milliseconds: {
+  otherDigits: {
     textAlign: 'center',
     fontVariant: ['tabular-nums'],
   },

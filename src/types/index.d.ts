@@ -142,16 +142,16 @@ interface CommonStylingProps {
    * @type {StyleProp<ViewStyle>}
    */
   digitContainerStyle?: StyleProp<ViewStyle>;
-  /** Style for the individual digits, eg: Tens of seconds
+  /** Style for the digits, eg: Tens of seconds, milliseconds, AM/PM
    * @default undefined
    * @type {StyleProp<TextStyle>}
    */
   digitStyle?: StyleProp<TextStyle>;
-  /** Style for the milliseconds digits.
-   * @default undefined
-   * @type {StyleProp<TextStyle>}
-   */
-  millisecondsStyle?: StyleProp<TextStyle>;
+  // /** Style for the milliseconds digits.
+  //  * @default undefined
+  //  * @type {StyleProp<TextStyle>}
+  //  */
+  // millisecondsStyle?: StyleProp<TextStyle>;
 }
 
 export type {

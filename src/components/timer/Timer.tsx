@@ -49,7 +49,7 @@ function TimerComponent(
 
     digitContainerStyle,
     digitStyle,
-    millisecondsStyle,
+    // millisecondsStyle,
   }: TimerProps,
   ref: ForwardedRef<Timer>
 ) {
@@ -162,7 +162,7 @@ function TimerComponent(
               style={[
                 styles.milliseconds,
                 digitStyleWithoutWidth,
-                millisecondsStyle,
+                // millisecondsStyle,
               ]}
             >
               {String(milliseconds).padStart(3, '0')}

@@ -45,7 +45,7 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
 
       digitContainerStyle,
       digitStyle,
-      millisecondsStyle,
+      // millisecondsStyle,
     },
     _
   ) => {
@@ -59,6 +59,7 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
       secondsTens,
       secondsUnits,
       milliseconds,
+      ampm,
     } = getSnapshotAsDigits();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -132,12 +133,18 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
             {showMilliseconds && (
               <Text
                 style={[
-                  styles.milliseconds,
+                  styles.otherDigits,
                   digitStyleWithoutWidth,
-                  millisecondsStyle,
+                  // millisecondsStyle,
                 ]}
               >
                 {String(milliseconds).padStart(3, '0')}
+              </Text>
+            )}
+            {/* AM/PM based on Format given  */}
+            {format === '12' && (
+              <Text style={[styles.otherDigits, digitStyleWithoutWidth]}>
+                {ampm}
               </Text>
             )}
           </View>
