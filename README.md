@@ -1,11 +1,11 @@
-# React Native Reanimated Chrono
+# React Native Reanimated Timer
 
-[![license](https://img.shields.io/npm/l/react-native-reanimated-chrono?style=flat-square)](https://www.npmjs.com/package/react-native-reanimated-chrono) [![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/) [![npm](https://img.shields.io/badge/types-included-blue?style=flat-square)](https://www.npmjs.com/package/react-native-reanimated-chrono)
-[![Reanimated v3 version](https://img.shields.io/github/package-json/v/amilmohd155/reanimated-chrono/main?label=Reanimated%20v3&style=flat-square)](https://www.npmjs.com/package/react-native-reanimated-chrono)
+[![license](https://img.shields.io/npm/l/@docren/react-native-reanimated-timer?style=flat-square)](https://www.npmjs.com/package/@docren/react-native-reanimated-timer) [![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/) [![npm](https://img.shields.io/badge/types-included-blue?style=flat-square)](https://www.npmjs.com/package/@docren/react-native-reanimated-timer)
+[![Reanimated v3 version](https://img.shields.io/github/package-json/v/amilmohd155/react-native-reanimated-timer/main?label=Reanimated%20v3&style=flat-square)](https://www.npmjs.com/package/@docren/react-native-reanimated-timer)
 
 A Reanimated-powered library for creating smooth and customizable timers, stopwatches, and time displays in React Native. ⏳
 
-![React Native Reanimated Chrono](./preview.gif)
+![React Native Reanimated Timer](./preview.gif)
 
 ## Features
 
@@ -37,7 +37,7 @@ You can mix and match these building blocks to create custom layouts, animations
 Example
 
 ```tsx
-import { Timer } from '@doclabs/react-native-reanimated-timer';
+import { Timer } from '@docren/react-native-reanimated-timer';
 
 export default function App() {
   return (
@@ -91,7 +91,7 @@ Each component (Timer, Stopwatch, Clock) manages its own internal timing logic w
 ### Installation
 
 ```sh
-npm install @doclabs/react-native-reanimated-timer
+npm install @docren/react-native-reanimated-timer
 ```
 
 > Note: This package is built on top of [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/), so make sure it’s properly installed and configured in your project.

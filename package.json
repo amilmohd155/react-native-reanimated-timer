@@ -1,5 +1,5 @@
 {
-  "name": "@doclabs/react-native-reanimated-timer",
+  "name": "@docren/react-native-reanimated-timer",
   "version": "1.0.0",
   "description": "A reanimated library for displaying timer, stopwatch and time.",
   "main": "./lib/module/index.js",
@@ -20,7 +20,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "example": "yarn workspace @doclabs/react-native-reanimated-timer-example",
+    "example": "yarn workspace @docren/react-native-reanimated-timer-example",
     "test": "jest",
     "typecheck": "tsc --skipLibCheck --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -42,14 +42,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amilmohd155/reanimated-chrono.git"
+    "url": "git+https://github.com/amilmohd155/react-native-reanimated-timer.git"
   },
   "author": "Amil Muhammed Hamza <amilmohd155@gmail.com> (https://github.com/amilmohd155)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amilmohd155/reanimated-chrono/issues"
+    "url": "https://github.com/amilmohd155/react-native-reanimated-timer/issues"
   },
-  "homepage": "https://github.com/amilmohd155/reanimated-chrono#readme",
+  "homepage": "https://github.com/amilmohd155/react-native-reanimated-timer#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"

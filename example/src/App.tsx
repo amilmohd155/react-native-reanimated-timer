@@ -1,8 +1,4 @@
-import {
-  Clock,
-  Stopwatch,
-  Timer,
-} from '@doclabs/react-native-reanimated-timer';
+import { Clock, Stopwatch, Timer } from '@docren/react-native-reanimated-timer';
 import { useRef } from 'react';
 import {
   Pressable,
