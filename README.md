@@ -9,10 +9,12 @@ A Reanimated-powered library for creating smooth and customizable timers, stopwa
 
 ## Features
 
+- 🧩 **Highly Composible** - All components — Timer, Stopwatch, and Clock — are now fully composable.
 - ⚡ **High Performance** – Achieves smooth 60FPS animations using Reanimated
 - 🎨 **Fully Customizable** – Configure behavior, appearance, and animations via flexible props
 - 🎞️ **Built-in Entry & Exit Animations** – Seamlessly integrate with Reanimated transitions
 - 🧩 **Powered by Reanimated v3** – Utilizes the latest version for optimal performance and capabilities
+- 🎨 Support Classnames
 - 🚀 **Expo-Compatible** – Works out of the box with managed Expo projects
 - ✨ **TypeScript First**– Fully typed for better DX and safer code
 
@@ -21,6 +23,61 @@ A Reanimated-powered library for creating smooth and customizable timers, stopwa
 - **Timer** – Countdown timer with customizable duration, animations, and callbacks. [Check it out](#timer)
 - **Stopwatch** – Accurate stopwatch with start, pause, and reset controls. [Check it out](#stopwatch)
 - **Digital Clock** – Live clock display showing current time, updated in real-time. [Check it out](#clock)
+
+## Composability
+
+All components — Timer, Stopwatch, and Clock — are now fully composable.
+
+They share a common set of time unit segments:
+Day, Hour, Minute, Second, and Millisecond.
+
+This means you have full control over how time is displayed and animated.
+You can mix and match these building blocks to create custom layouts, animations, and styles that fit your app perfectly.
+
+Example
+
+```tsx
+import { Timer } from '@doclab/react-native-reanimated-timer';
+
+export default function App() {
+  return (
+    <Timer durationMs={60000}>
+      <Timer.Minute />
+      <Timer.Second />
+      <Timer.Millisecond />
+    </Timer>
+  );
+}
+```
+
+You can also use the same composable structure with the Stopwatch and Clock components:
+
+```tsx
+<Stopwatch autoStart>
+  <Stopwatch.Hour />
+  <Stopwatch.Minute />
+  <Stopwatch.Second />
+</Stopwatch>
+
+<Clock format="12">
+  <Clock.Hour />
+  <Clock.Minute />
+  <Clock.Second />
+</Clock>
+```
+
+Why Composability?
+
+This design enables:
+
+- 🧱 Maximum Flexibility – Use only the units you need (Minute, Second, etc.).
+- 🎨 Full Customization – Add your own separators, labels, or styles between units.
+- ⚙️ Consistency – All unit components share a consistent API across Timer, Stopwatch, and Clock.
+- 🔄 Interchangeability – Swap components easily without changing the surrounding layout or logic.
+
+Each component (Timer, Stopwatch, Clock) manages its own internal timing logic while exposing shared subcomponents for complete composability and freedom of use.
+
+[Learn more](#segments)
 
 ## Acknowledgements
 
@@ -34,7 +91,7 @@ A Reanimated-powered library for creating smooth and customizable timers, stopwa
 ### Installation
 
 ```sh
-npm install react-native-reanimated-chrono
+npm install @doclab/react-native-reanimated-timer
 ```
 
 > Note: This package is built on top of [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/), so make sure it’s properly installed and configured in your project.
@@ -165,22 +222,40 @@ For additional props, refer to the [Common Props](#common-props) section.
 
 > All common props are optional
 
-| Prop                | Type                  | Default   | Description                                                                                                                                            |
-| ------------------- | --------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| animationDelay      | number                | 0         | Delay before the animation starts (in milliseconds).                                                                                                   |
-| animationDuration   | number                | 80        | Duration of the animation (in milliseconds).                                                                                                           |
-| animationDistance   | number                | 1200      | Distance the animation moves.                                                                                                                          |
-| animationDirection  | 'up' \| 'down'        | 'down'    | Direction of the animation ('up' or 'down').                                                                                                           |
-| entering            | EntryOrExitLayoutType | undefined | Custom entering animation from [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations). |
-| exiting             | EntryOrExitLayoutType | undefined | Custom exiting animation from [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations) . |
-| skipEntering        | boolean               | true      | Useful for preventing initial animation on mount.                                                                                                      |
-| skipExiting         | boolean               | false     | Useful for preventing exit animation on unmount.                                                                                                       |
-| separator           | string                | ":"       | Separator between time units, can be a string, a function returning a JSX element, or null.                                                            |
-| separatorStyle      | TextStyle             | undefined | Style for the separator, if a string separator is provided. Oterwise, this prop is ignored.                                                            |
-| style               | ViewStyle             | undefined | Style for grouped digit's container. eg: [tens of seconds, units of seconds]                                                                           |
-| digitContainerStyle | ViewStyle             | undefined | Style for grouped digit's container. eg: [tens of seconds, units of seconds]                                                                           |
-| digitStyle          | TextStyle             | undefined | Style for the individual digits, eg: Tens of seconds                                                                                                   |
-| millisecondsStyle   | TextStyle             | undefined | Style for the milliseconds digits.                                                                                                                     |
+| Prop                    | Type                  | Default   | Description                                                                                                                                            |
+| ----------------------- | --------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| animationDelay          | number                | 0         | Delay before the animation starts (in milliseconds).                                                                                                   |
+| animationDuration       | number                | 80        | Duration of the animation (in milliseconds).                                                                                                           |
+| animationDistance       | number                | 1200      | Distance the animation moves.                                                                                                                          |
+| animationDirection      | 'up' \| 'down'        | 'down'    | Direction of the animation ('up' or 'down').                                                                                                           |
+| entering                | EntryOrExitLayoutType | undefined | Custom entering animation from [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations). |
+| exiting                 | EntryOrExitLayoutType | undefined | Custom exiting animation from [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations) . |
+| skipEntering            | boolean               | true      | Useful for preventing initial animation on mount.                                                                                                      |
+| skipExiting             | boolean               | false     | Useful for preventing exit animation on unmount.                                                                                                       |
+| style                   | ViewStyle             | undefined | Style for grouped digit's container. eg: [tens of seconds, units of seconds]                                                                           |
+| className               | string                | undefined | Styling for component                                                                                                                                  |
+| digitContainerStyle     | ViewStyle             | undefined | Style for grouped digit's container. eg: [tens of seconds, units of seconds]                                                                           |
+| digitContainerClassName | string                | undefined | Styling for digit's container                                                                                                                          |
+| digitStyle              | TextStyle             | undefined | Style for the individual digits, eg: Tens of seconds                                                                                                   |
+| digitClassName          | string                | undefined | Styling the individual digits                                                                                                                          |
+
+## Segments
+
+- **Day** (Not available for Clock)
+- **Hour**
+- **Minute**
+- **Second**
+- **Millisecond**
+- **AMPM** (avaible only in Clock)
+
+| Prop           | Type      | Default   | Description              |
+| -------------- | --------- | --------- | ------------------------ |
+| className      | string    | undefined | styling for the segment  |
+| style          | ViewStyle | undefined | styling for the segement |
+| digitClassName | string    | undefined | styling for the digits   |
+| digitStyle     | TextStyle | undefined | styling for the digits   |
+
+> Even though digit(Style/className) is provided here, it is preferred to use the digitStyle at the root level to ensure a common styling thru all segments
 
 ## Related
 

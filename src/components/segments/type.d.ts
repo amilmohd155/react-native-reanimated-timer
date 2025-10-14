@@ -1,4 +1,4 @@
-import type { StyleProp, ViewProps, ViewStyle } from 'react-native';
+import type { StyleProp, TextStyle, ViewProps, ViewStyle } from 'react-native';
 
 /**
  * Props for a segment component.
@@ -21,7 +21,7 @@ interface SegmentProps extends Omit<ViewProps, 'style' | 'className'> {
   /**
    * Style for the digit text inside the segment.
    */
-  digitStyle?: StyleProp<ViewStyle>;
+  digitStyle?: StyleProp<TextStyle>;
   /**
    * Class name for the digit text inside the segment.
    */
