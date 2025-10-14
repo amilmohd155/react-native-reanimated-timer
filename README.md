@@ -37,7 +37,7 @@ You can mix and match these building blocks to create custom layouts, animations
 Example
 
 ```tsx
-import { Timer } from '@doclab/react-native-reanimated-timer';
+import { Timer } from '@doclabs/react-native-reanimated-timer';
 
 export default function App() {
   return (
@@ -91,7 +91,7 @@ Each component (Timer, Stopwatch, Clock) manages its own internal timing logic w
 ### Installation
 
 ```sh
-npm install @doclab/react-native-reanimated-timer
+npm install @doclabs/react-native-reanimated-timer
 ```
 
 > Note: This package is built on top of [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/), so make sure it’s properly installed and configured in your project.

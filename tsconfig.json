@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@doclab/react-native-reanimated-timer": [
+      "@doclabs/react-native-reanimated-timer": [
         "./src/index"
       ]
     },

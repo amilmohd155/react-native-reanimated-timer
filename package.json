@@ -1,5 +1,5 @@
 {
-  "name": "@doclab/react-native-reanimated-timer",
+  "name": "@doclabs/react-native-reanimated-timer",
   "version": "0.5.0",
   "description": "A reanimated library for displaying timer, stopwatch and time.",
   "main": "./lib/module/index.js",
@@ -20,7 +20,7 @@
     "!**/__mocks__"
   ],
   "scripts": {
-    "example": "yarn workspace @doclab/react-native-reanimated-timer-example",
+    "example": "yarn workspace @doclabs/react-native-reanimated-timer-example",
     "test": "jest",
     "typecheck": "tsc --skipLibCheck --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",

@@ -1805,9 +1805,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@doclab/react-native-reanimated-timer-example@workspace:example":
+"@doclabs/react-native-reanimated-timer-example@workspace:example":
   version: 0.0.0-use.local
-  resolution: "@doclab/react-native-reanimated-timer-example@workspace:example"
+  resolution: "@doclabs/react-native-reanimated-timer-example@workspace:example"
   dependencies:
     "@babel/core": ^7.20.0
     "@expo/metro-runtime": ~5.0.4
@@ -1823,9 +1823,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@doclab/react-native-reanimated-timer@workspace:.":
+"@doclabs/react-native-reanimated-timer@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@doclab/react-native-reanimated-timer@workspace:."
+  resolution: "@doclabs/react-native-reanimated-timer@workspace:."
   dependencies:
     "@commitlint/config-conventional": ^19.6.0
     "@eslint/compat": ^1.2.7
