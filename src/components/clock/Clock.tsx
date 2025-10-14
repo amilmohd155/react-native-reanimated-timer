@@ -1,157 +1,83 @@
 import { forwardRef, memo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Digit, DigitConfigContext } from '../digit';
+import { View } from 'react-native';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
+import { RootContext } from '../../context';
+import { useTime } from '../../hooks/useTime';
+import { styles } from '../../styles';
+import { AMPM, Hour, Millisecond, Minute, Second } from '../segments';
 import {
   DEFAULT_INTERVAL_MS,
-  DEFAULT_SEPARATOR,
-  DEFAULT_SHOW_HOURS,
-  DEFAULT_SHOW_MILLISECONDS,
-  DEFAULT_SHOW_MINUTES,
-  DEFAULT_SHOW_SECONDS,
   DEFAULT_SKIP_ENTERING,
   DEFAULT_SKIP_EXITING,
 } from './constants';
-import { useTime } from '../../hooks/useTime';
 import type { ClockMethods, ClockProps } from './types';
-import { styles } from './style';
 
 type Clock = ClockMethods;
 
-const ClockComponent = forwardRef<Clock, ClockProps>(
-  (
-    {
-      format = '24',
-      intervalMs: interval = DEFAULT_INTERVAL_MS,
+const ClockComponent = memo(
+  forwardRef<Clock, ClockProps>(
+    (
+      {
+        format = '24',
+        intervalMs: interval = DEFAULT_INTERVAL_MS,
 
-      animationDelay,
-      animationDuration,
-      animationDistance,
-      animationDirection,
-      entering,
-      exiting,
-      skipExiting = DEFAULT_SKIP_EXITING,
-      skipEntering = DEFAULT_SKIP_ENTERING,
+        animationDelay,
+        animationDuration,
+        animationDistance,
+        animationDirection,
+        entering,
+        exiting,
+        skipExiting = DEFAULT_SKIP_EXITING,
+        skipEntering = DEFAULT_SKIP_ENTERING,
 
-      showHours = DEFAULT_SHOW_HOURS,
-      showMinutes = DEFAULT_SHOW_MINUTES,
-      showSeconds = DEFAULT_SHOW_SECONDS,
-      showMilliseconds = DEFAULT_SHOW_MILLISECONDS,
+        style,
 
-      separator = DEFAULT_SEPARATOR,
-      separatorStyle,
+        digitContainerStyle,
+        digitStyle,
+        className,
+        digitContainerClassName,
+        digitClassName,
 
-      style,
+        children,
+      },
+      _
+    ) => {
+      const { getSnapshotAsDigits } = useTime({ format, interval });
 
-      digitContainerStyle,
-      digitStyle,
-      // millisecondsStyle,
-    },
-    _
-  ) => {
-    const { getSnapshotAsDigits } = useTime({ format, interval });
+      const timeUnits = getSnapshotAsDigits();
 
-    const {
-      hoursTens,
-      hoursUnits,
-      minutesTens,
-      minutesUnits,
-      secondsTens,
-      secondsUnits,
-      milliseconds,
-      ampm,
-    } = getSnapshotAsDigits();
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { width, ...digitStyleWithoutWidth } =
-      StyleSheet.flatten(digitStyle) || {};
-
-    const renderSeparator = () => {
-      if (typeof separator === 'string') {
-        return (
-          <Text style={[styles.separator, separatorStyle]}>{separator}</Text>
-        );
-      } else if (typeof separator === 'function') {
-        return separator?.();
-      }
-      return null;
-    };
-
-    return (
-      <LayoutAnimationConfig
-        skipExiting={skipExiting}
-        skipEntering={skipEntering}
-      >
-        <DigitConfigContext.Provider
-          value={{
-            animationDelay,
-            animationDuration,
-            animationDistance,
-            animationDirection,
-            entering,
-            exiting,
-            style: digitStyle,
-          }}
+      return (
+        <LayoutAnimationConfig
+          skipExiting={skipExiting}
+          skipEntering={skipEntering}
         >
-          <View style={[styles.container, style]}>
-            {showHours && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${hoursTens}-hoursTens`}>{hoursTens}</Digit>
-                <Digit digitkey={`${hoursUnits}-hoursUnits`}>
-                  {hoursUnits}
-                </Digit>
-              </View>
-            )}
-            {showHours &&
-              (showMinutes || showSeconds || showMilliseconds) &&
-              renderSeparator()}
-            {showMinutes && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${minutesTens}-minutesTens`}>
-                  {minutesTens}
-                </Digit>
-                <Digit digitkey={`${minutesUnits}-minutesUnits`}>
-                  {minutesUnits}
-                </Digit>
-              </View>
-            )}
-            {showMinutes &&
-              (showSeconds || showMilliseconds) &&
-              renderSeparator()}
-            {showSeconds && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${secondsTens}-secondsTens`}>
-                  {secondsTens}
-                </Digit>
+          <RootContext.Provider
+            value={{
+              animationDelay,
+              animationDuration,
+              animationDistance,
+              animationDirection,
+              entering,
+              exiting,
 
-                <Digit digitkey={`${secondsUnits}-secondsUnits`}>
-                  {secondsUnits}
-                </Digit>
-              </View>
-            )}
-            {showSeconds && showMilliseconds && renderSeparator()}
-            {showMilliseconds && (
-              <Text
-                style={[
-                  styles.otherDigits,
-                  digitStyleWithoutWidth,
-                  // millisecondsStyle,
-                ]}
-              >
-                {String(milliseconds).padStart(3, '0')}
-              </Text>
-            )}
-            {/* AM/PM based on Format given  */}
-            {format === '12' && (
-              <Text style={[styles.otherDigits, digitStyleWithoutWidth]}>
-                {ampm}
-              </Text>
-            )}
-          </View>
-        </DigitConfigContext.Provider>
-      </LayoutAnimationConfig>
-    );
-  }
+              digitStyle,
+              digitContainerStyle,
+              digitClassName,
+              digitContainerClassName,
+
+              daysTens: 0,
+              daysUnits: 0,
+              ...timeUnits,
+            }}
+          >
+            <View style={[styles.container, style]} className={className}>
+              {children}
+            </View>
+          </RootContext.Provider>
+        </LayoutAnimationConfig>
+      );
+    }
+  )
 );
 
 /**
@@ -160,7 +86,67 @@ const ClockComponent = forwardRef<Clock, ClockProps>(
  * The time format can be set to either 12-hour or 24-hour format.
  * The component supports custom animations and styles.
  */
-const Clock = memo(ClockComponent);
+const Clock = Object.assign(ClockComponent, {
+  /**
+   * Sub-component to display hours.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Hour,
+  /**
+   * Sub-component to display minutes.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Minute,
+  /**
+   * Sub-component to display seconds.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Second,
+  /**
+   * Sub-component to display milliseconds.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * To style text in this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   *
+   * Note: Width of Millisecond segment is set to "auto" to accommodate text length irrespective of digitStyle width.
+   * if you want to customize the width, use `digitStyle` prop on this component.
+   */
+  Millisecond,
+  /**
+   * Sub-component to display AM/PM indicator.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: Width of AM/PM segment is set to "auto" to accommodate text length irrespective of digitStyle width.
+   * if you want to customize the width, use `digitStyle` prop on this component.
+   */
+  AMPM,
+});
 Clock.displayName = 'Clock';
 
 export default Clock;

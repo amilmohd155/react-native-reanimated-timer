@@ -6,15 +6,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
   },
-  section: {
+  segment: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  separator: {
-    textAlign: 'center',
   },
   otherDigits: {
     textAlign: 'center',
     fontVariant: ['tabular-nums'],
+  },
+  widthAuto: {
+    width: 'auto',
   },
 });

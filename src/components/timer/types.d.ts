@@ -1,7 +1,6 @@
 import {
   Time,
   type CommonStylingProps,
-  type VisibilityProps,
   type AnimationProps,
 } from '../../types';
 
@@ -47,16 +46,12 @@ export interface TimerMethods {
  * The props for the Timer component.
  * @extends {CommonStylingProps}
  * @extends {AnimationProps}
- * @extends {VisibilityProps}
  * @prop {number} durationMs - The duration in milliseconds for the timer. @required
  * @prop {number} [intervalMs=1000] - The interval in milliseconds to update the timer.
  * @prop {boolean} [autoStart=true] - Whether to start the timer automatically.
  * @prop {() => void} [onExpire] - Callback function to be called when the timer expires.
  */
-export interface TimerProps
-  extends VisibilityProps,
-    AnimationProps,
-    CommonStylingProps {
+export interface TimerProps extends AnimationProps, CommonStylingProps {
   /** The duration in milliseconds for the timer.
    * @type {number}
    * @required

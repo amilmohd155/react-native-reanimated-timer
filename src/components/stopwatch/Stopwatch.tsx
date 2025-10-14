@@ -1,184 +1,164 @@
 import { forwardRef, memo, useImperativeHandle } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import type { StopwatchMethods, StopwatchProps } from './types';
-import { Digit, DigitConfigContext } from '../digit';
+import { View } from 'react-native';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
-import { styles } from './style';
+import { RootContext } from '../../context';
 import { useStopwatch } from '../../hooks/useStopwatch';
+import { styles } from '../../styles';
+import { Day, Hour, Millisecond, Minute, Second } from '../segments';
 import {
   DEFAULT_AUTO_START,
   DEFAULT_INTERVAL_MS,
-  DEFAULT_SEPARATOR,
-  DEFAULT_SHOW_DAYS,
-  DEFAULT_SHOW_HOURS,
-  DEFAULT_SHOW_MILLISECONDS,
-  DEFAULT_SHOW_MINUTES,
-  DEFAULT_SHOW_SECONDS,
   DEFAULT_SKIP_ENTERING,
   DEFAULT_SKIP_EXITING,
 } from './constants';
+import type { StopwatchMethods, StopwatchProps } from './types';
 
 type Stopwatch = StopwatchMethods;
 
-const StopWatchComponent = forwardRef<Stopwatch, StopwatchProps>(
-  (
-    {
-      autoStart = DEFAULT_AUTO_START,
-      offsetTimestamp,
-      intervalMs: interval = DEFAULT_INTERVAL_MS,
-
-      animationDelay,
-      animationDistance,
-      animationDirection,
-      animationDuration,
-      entering,
-      exiting,
-      skipEntering = DEFAULT_SKIP_ENTERING,
-      skipExiting = DEFAULT_SKIP_EXITING,
-
-      showDays = DEFAULT_SHOW_DAYS,
-      showHours = DEFAULT_SHOW_HOURS,
-      showMinutes = DEFAULT_SHOW_MINUTES,
-      showSeconds = DEFAULT_SHOW_SECONDS,
-      showMilliseconds = DEFAULT_SHOW_MILLISECONDS,
-
-      separator = DEFAULT_SEPARATOR,
-      separatorStyle,
-
-      style,
-
-      digitContainerStyle,
-      digitStyle,
-      // millisecondsStyle,
-    },
-    ref
-  ) => {
-    const { start, pause, reset, getSnapshot, getSnapshotAsDigits } =
-      useStopwatch({
-        autoStart,
-        interval,
+const StopWatchComponent = memo(
+  forwardRef<Stopwatch, StopwatchProps>(
+    (
+      {
+        // Stopwatch
+        autoStart = DEFAULT_AUTO_START,
         offsetTimestamp,
-      });
+        intervalMs: interval = DEFAULT_INTERVAL_MS,
 
-    const {
-      daysTens,
-      daysUnits,
-      hoursTens,
-      hoursUnits,
-      minutesTens,
-      minutesUnits,
-      secondsTens,
-      secondsUnits,
-      milliseconds,
-    } = getSnapshotAsDigits();
+        // Animation
+        animationDelay,
+        animationDistance,
+        animationDirection,
+        animationDuration,
+        entering,
+        exiting,
+        skipEntering = DEFAULT_SKIP_ENTERING,
+        skipExiting = DEFAULT_SKIP_EXITING,
 
-    useImperativeHandle(ref, () => ({
-      start,
-      pause,
-      reset,
-      getSnapshot,
-    }));
+        // Styles
+        style,
+        className,
+        digitContainerStyle,
+        digitContainerClassName,
+        digitStyle,
+        digitClassName,
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { width, ...digitStyleWithoutWidth } =
-      StyleSheet.flatten(digitStyle) || {};
+        children,
+      },
+      ref
+    ) => {
+      const { start, pause, reset, getSnapshot, getSnapshotAsDigits } =
+        useStopwatch({
+          autoStart,
+          interval,
+          offsetTimestamp,
+        });
 
-    const renderSeparator = () => {
-      if (typeof separator === 'string') {
-        return (
-          <Text style={[styles.separator, separatorStyle]}>{separator}</Text>
-        );
-      } else if (typeof separator === 'function') {
-        return separator?.();
-      }
-      return null;
-    };
+      const timeUnits = getSnapshotAsDigits();
 
-    return (
-      <LayoutAnimationConfig
-        skipEntering={skipEntering}
-        skipExiting={skipExiting}
-      >
-        <DigitConfigContext.Provider
-          value={{
-            animationDelay,
-            animationDuration,
-            animationDistance,
-            animationDirection,
-            entering,
-            exiting,
-            style: digitStyle,
-          }}
+      useImperativeHandle(ref, () => ({
+        start,
+        pause,
+        reset,
+        getSnapshot,
+      }));
+
+      return (
+        <LayoutAnimationConfig
+          skipEntering={skipEntering}
+          skipExiting={skipExiting}
         >
-          <View style={[styles.container, style]}>
-            {showDays && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${daysTens}-daysTens`}>{daysTens}</Digit>
-                <Digit digitkey={`${daysUnits}-daysUnits`}>{daysUnits}</Digit>
-              </View>
-            )}
-            {showDays &&
-              (showHours || showMinutes || showSeconds || showMilliseconds) &&
-              renderSeparator()}
-            {showHours && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${hoursTens}-hoursTens`}>{hoursTens}</Digit>
-                <Digit digitkey={`${hoursUnits}-hoursUnits`}>
-                  {hoursUnits}
-                </Digit>
-              </View>
-            )}
-            {showHours &&
-              (showMinutes || showSeconds || showMilliseconds) &&
-              renderSeparator()}
-            {showMinutes && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${minutesTens}-minutesTens`}>
-                  {minutesTens}
-                </Digit>
-                <Digit digitkey={`${minutesUnits}-minutesUnits`}>
-                  {minutesUnits}
-                </Digit>
-              </View>
-            )}
-            {showMinutes &&
-              (showSeconds || showMilliseconds) &&
-              renderSeparator()}
-            {showSeconds && (
-              <View style={[styles.section, digitContainerStyle]}>
-                <Digit digitkey={`${secondsTens}-secondsTens`}>
-                  {secondsTens}
-                </Digit>
+          <RootContext.Provider
+            value={{
+              animationDelay,
+              animationDuration,
+              animationDistance,
+              animationDirection,
+              entering,
+              exiting,
 
-                <Digit digitkey={`${secondsUnits}-secondsUnits`}>
-                  {secondsUnits}
-                </Digit>
-              </View>
-            )}
-            {showSeconds && showMilliseconds && renderSeparator()}
-            {showMilliseconds && (
-              <Text
-                style={[
-                  styles.milliseconds,
-                  digitStyleWithoutWidth,
-                  // millisecondsStyle,
-                ]}
-              >
-                {String(milliseconds).padStart(3, '0')}
-              </Text>
-            )}
-          </View>
-        </DigitConfigContext.Provider>
-      </LayoutAnimationConfig>
-    );
-  }
+              ...timeUnits,
+
+              digitStyle,
+              digitClassName,
+              digitContainerStyle,
+              digitContainerClassName,
+
+              ampm: '',
+            }}
+          >
+            <View style={[styles.container, style]} className={className}>
+              {children}
+            </View>
+          </RootContext.Provider>
+        </LayoutAnimationConfig>
+      );
+    }
+  )
 );
 
 /**
  * Stopwatch component that displays elapsed time in a digital format.
  * It can be started, paused, and reset.
  */
-const Stopwatch = memo(StopWatchComponent);
-Stopwatch.displayName = 'Stopwatch';
+const Stopwatch = Object.assign(StopWatchComponent, {
+  /**
+   * Sub-component to display days.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Day,
+  /**
+   * Sub-component to display hours.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Hour,
+  /**
+   * Sub-component to display minutes.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Minute,
+  /**
+   * Sub-component to display seconds.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   */
+  Second,
+  /**
+   * Sub-component to display milliseconds.
+   *
+   * To style individual segments, use the `style` and `className` props on this component.
+   *
+   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * to ensure consistent styling across all segments.
+   *
+   * To style text in this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   *
+   * Note: Width of Millisecond segment is set to "auto" to accommodate text length irrespective of digitStyle width.
+   * if you want to customize the width, use `digitStyle` prop on this component.
+   */
+  Millisecond,
+});
 
 export default Stopwatch;
