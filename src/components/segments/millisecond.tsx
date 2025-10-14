@@ -26,10 +26,10 @@ const MSComponent = forwardRef<View, SegmentProps>(
 
     return (
       <View
+        {...props}
+        ref={ref}
         style={containerStyle}
         className={className || digitContainerClassName}
-        ref={ref}
-        {...props}
       >
         <Text
           style={digitCombinedStyle}

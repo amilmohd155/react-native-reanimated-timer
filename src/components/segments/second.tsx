@@ -16,10 +16,10 @@ const SecondComponent = forwardRef<View, SegmentProps>(
 
     return (
       <View
+        {...props}
+        ref={ref}
         style={containerStyle}
         className={className || digitContainerClassName}
-        ref={ref}
-        {...props}
       >
         <Digit
           digitType="secondsTens"
