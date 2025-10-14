@@ -1,12 +1,16 @@
+import { Clock, Stopwatch, Timer } from '@doclab/react-native-reanimated-timer';
 import { useRef } from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
-import { Clock, Stopwatch, Timer } from 'react-native-reanimated-chrono';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  type PressableProps,
+} from 'react-native';
 
 export default function App() {
   const timerRef = useRef<Timer>(null);
   const stopwatchRef = useRef<Stopwatch>(null);
-
-  const renderSeparator = () => <View style={styles.separatorComponent} />;
 
   const durationMs =
     1 * 24 * 60 * 60 * 1000 + // 1 days
@@ -15,52 +19,73 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Timer</Text>
+      <Text style={styles.title}>Timer</Text>
       <Text>1 days 1 hours 30 minutes</Text>
       <Timer
-        showDays
         ref={timerRef}
-        autoStart={false}
+        autoStart={true}
         durationMs={durationMs}
-        separator={renderSeparator}
-        // separatorStyle={styles.separatorStyle} // Optional
         digitStyle={styles.digit}
         style={styles.componentContainer}
-      />
+      >
+        <Timer.Day />
+        <Timer.Hour />
+        <Timer.Minute />
+        <Timer.Second />
+        <Timer.Millisecond />
+      </Timer>
       <View style={styles.buttonContainer}>
-        <Button title="Start" onPress={() => timerRef.current?.start()} />
-        <Button title="Pause" onPress={() => timerRef.current?.pause()} />
-        <Button title="Resume" onPress={() => timerRef.current?.resume()} />
-        <Button title="Reset" onPress={() => timerRef.current?.reset()} />
+        <Button onPress={() => timerRef.current?.start()}>Start</Button>
+        <Button onPress={() => timerRef.current?.pause()}>Pause</Button>
+        <Button onPress={() => timerRef.current?.resume()}>Resume</Button>
+        <Button onPress={() => timerRef.current?.reset()}>Reset</Button>
       </View>
       <View style={styles.divider} />
-      <Text style={styles.label}>Clock</Text>
+      <Text style={styles.title}>Clock</Text>
       <Clock
         format="12"
-        separator={renderSeparator}
         digitStyle={styles.digit}
         style={styles.componentContainer}
-      />
+      >
+        <Clock.Hour />
+        <Clock.Minute />
+        <Clock.Second />
+        <Clock.Millisecond />
+        <Clock.AMPM />
+      </Clock>
       <View style={styles.divider} />
-      <Text style={styles.label}>Stopwatch</Text>
+      <Text style={styles.title}>Stopwatch</Text>
       <Stopwatch
         ref={stopwatchRef}
-        // autoStart
-        separator={renderSeparator}
         style={styles.componentContainer}
         digitStyle={styles.digit}
-      />
+      >
+        <Stopwatch.Hour />
+        <Stopwatch.Minute />
+        <Stopwatch.Second />
+        <Stopwatch.Millisecond />
+      </Stopwatch>
       <View style={styles.buttonContainer}>
-        <Button title="Start" onPress={() => stopwatchRef.current?.start()} />
-        <Button title="Pause" onPress={() => stopwatchRef.current?.pause()} />
-        <Button
-          title="Reset"
-          onPress={() => stopwatchRef.current?.reset(false)}
-        />
+        <Button onPress={() => stopwatchRef.current?.start()}>Start</Button>
+        <Button onPress={() => stopwatchRef.current?.pause()}>Pause</Button>
+        <Button onPress={() => stopwatchRef.current?.reset(false)}>
+          Reset
+        </Button>
       </View>
     </View>
   );
 }
+
+const Button = ({
+  children,
+  ...props
+}: Omit<PressableProps, 'children'> & { children: string }) => {
+  return (
+    <Pressable style={styles.button} {...props}>
+      <Text style={styles.label}>{children}</Text>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -68,17 +93,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
+    backgroundColor: '#FFFFFF',
   },
   button: {
     padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    marginBottom: 10,
+    backgroundColor: '#000000',
+    borderRadius: 100,
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#000000',
   },
   label: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#4e4cc4',
+    color: '#ffffff',
   },
   divider: {
     height: 2,
@@ -93,25 +122,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#4e4cc4',
-    backgroundColor: '#f0f0f0',
+    borderColor: '#c5c5c5',
+    backgroundColor: '#000000',
     justifyContent: 'center',
     alignItems: 'center',
   },
   digit: {
     fontSize: 28,
-    color: '#4e4cc4',
+    color: '#ffffff',
     fontWeight: 'bold',
     width: 20,
-  },
-  separatorComponent: {
-    backgroundColor: '#4e4cc4',
-    aspectRatio: 1,
-    width: 8,
-    borderRadius: 100,
-  },
-  separator: {
-    fontSize: 24,
   },
   buttonContainer: {
     flexDirection: 'row',
