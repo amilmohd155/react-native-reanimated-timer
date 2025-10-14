@@ -1,24 +1,16 @@
-import type {
-  AnimationProps,
-  CommonStylingProps,
-  Time,
-  VisibilityProps,
-} from '../../types';
+import type { AnimationProps, CommonStylingProps, Time } from '../../types';
 
 /**
  * Stopwatch component props
  * @interface StopwatchProps
- * @extends { VisibilityProps }
- * @extends { AnimationProps }
- * @extends { CommonStylingProps }
- * @prop {boolean} autoStart - Whether to start the stopwatch automatically.
- * @prop {Date} offsetTimestamp - The offset timestamp to start the stopwatch from.
- * @prop {number} intervalMs - The interval in milliseconds to update the stopwatch.
+ * @extends  VisibilityProps
+ * @extends AnimationProps
+ * @extends CommonStylingProps
+ * @prop \{boolean\} autoStart - Whether to start the stopwatch automatically.
+ * @prop \{Date\} offsetTimestamp - The offset timestamp to start the stopwatch from.
+ * @prop \{number\} intervalMs - The interval in milliseconds to update the stopwatch.
  */
-interface StopwatchProps
-  extends VisibilityProps,
-    AnimationProps,
-    CommonStylingProps {
+interface StopwatchProps extends AnimationProps, CommonStylingProps {
   /**
    * Whether to start the stopwatch automatically.
    * @default false
@@ -34,6 +26,12 @@ interface StopwatchProps
    * @default 1000
    */
   intervalMs?: number;
+  /**
+   * Children elements to be rendered inside the Stopwatch component.
+   * @default undefined
+   * @type {React.ReactNode}
+   */
+  children: React.ReactNode;
 }
 
 /**

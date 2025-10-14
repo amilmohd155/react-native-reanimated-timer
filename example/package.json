@@ -1,5 +1,5 @@
 {
-  "name": "react-native-reanimated-chrono-example",
+  "name": "@doclab/react-native-reanimated-timer-example",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

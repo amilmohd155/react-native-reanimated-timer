@@ -1,5 +1,10 @@
-import { AnimatedProps } from 'react-native-reanimated';
 import { StyleProp, TextProps, TextStyle, ViewStyle } from 'react-native';
+import { AnimatedProps } from 'react-native-reanimated';
+
+/**
+ * Represents the AM/PM indicator.
+ */
+type AMPM = 'AM' | 'PM' | '';
 
 /**
  * Represents the time format, either 12-hour or 24-hour.
@@ -15,8 +20,6 @@ type Time = {
   minutes: number;
   seconds: number;
   milliseconds: number;
-  // totalSeconds: number;
-  // totalMilliseconds: number;
 };
 
 /**
@@ -41,31 +44,13 @@ type FormattedTime = {
   seconds: number;
   minutes: number;
   hours: number;
-  ampm: 'AM' | 'PM' | '';
+  ampm: AMPM;
 };
 
 /**
  * Specifies the direction of animation, either 'up' or 'down'.
  */
 type AnimationDirection = 'up' | 'down';
-
-/**
- * Props to control the visibility of different time units.
- */
-interface VisibilityProps {
-  /** Whether to show the days. */
-  showDays?: boolean;
-  /** Whether to show the hours. */
-  showHours?: boolean;
-  /** Whether to show the minutes. */
-  showMinutes?: boolean;
-  /** Whether to show the seconds. */
-  showSeconds?: boolean;
-  /** Whether to show the milliseconds.
-   * @type {boolean}
-   */
-  showMilliseconds?: boolean;
-}
 
 /**
  * Props to control animation behavior for time display.
@@ -117,27 +102,12 @@ interface AnimationProps {
  * Common styling props for customizing the appearance of the time display.
  */
 interface CommonStylingProps {
-  /** Separator between time units, can be a string, a function returning a JSX element, or null.
-   * @default ":"
-   * @type {string | (() => JSX.Element) | null}
-   * @example
-   * <Text>:</Text>
-   * or
-   * const renderSeparator = () => <View style={styles.separatorComponent} />;
-   * <Timer separator={renderSeparator}/>
-   */
-  separator?: string | (() => JSX.Element) | null;
-  /** Style for the separator, if a string separator is provided. Oterwise, this prop is ignored.
-   * @default undefined
-   * @type {StyleProp<TextStyle>}
-   */
-  separatorStyle?: StyleProp<TextStyle>;
   /** Style for the overall container.
    * @default undefined
    * @type {StyleProp<ViewStyle>}
    */
   style?: StyleProp<ViewStyle>;
-  /** Style for grouped digit's container. eg: [tens of seconds, units of seconds]
+  /** Style for grouped digit's container. eg: [tens, units of seconds]
    * @default undefined
    * @type {StyleProp<ViewStyle>}
    */
@@ -147,20 +117,31 @@ interface CommonStylingProps {
    * @type {StyleProp<TextStyle>}
    */
   digitStyle?: StyleProp<TextStyle>;
-  // /** Style for the milliseconds digits.
-  //  * @default undefined
-  //  * @type {StyleProp<TextStyle>}
-  //  */
-  // millisecondsStyle?: StyleProp<TextStyle>;
+
+  /** Class name for the overall container.
+   * @default undefined
+   * @type {string}
+   */
+  className?: string;
+  /** Class name for grouped digit's container. eg: [tens, units of seconds]
+   * @default undefined
+   * @type {string}
+   */
+  digitContainerClassName?: string;
+  /** Class name for the digits, eg: Tens of seconds, milliseconds, AM/PM
+   * @default undefined
+   * @type {string}
+   */
+  digitClassName?: string;
 }
 
 export type {
-  Time,
-  TimeUnits,
-  TimeFormat,
-  FormattedTime,
+  AMPM,
   AnimationDirection,
-  VisibilityProps,
   AnimationProps,
   CommonStylingProps,
+  FormattedTime,
+  Time,
+  TimeFormat,
+  TimeUnits,
 };

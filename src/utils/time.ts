@@ -1,4 +1,4 @@
-import type { Time, FormattedTime, TimeUnits } from '../types';
+import type { FormattedTime, Time, TimeUnits } from '../types';
 
 function clampToZero(milliSecondsDistance: number): number {
   return Math.max(0, milliSecondsDistance);
@@ -104,10 +104,10 @@ function getFormattedTime(
 }
 
 export {
-  getTimeFromMs,
-  getTimeUnitsFromMs,
+  getFormattedTime,
+  getMsFromCurrentTime,
   getMsFromExpiryDate,
   getMsFromPrevTime,
-  getMsFromCurrentTime,
-  getFormattedTime,
+  getTimeFromMs,
+  getTimeUnitsFromMs,
 };

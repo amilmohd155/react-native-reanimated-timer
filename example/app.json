@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "example",
-    "slug": "example",
+    "name": "RN Reanimated Timer",
+    "slug": "doclab-react-native-reanimated-timer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "reanimatedchrono.example"
+      "bundleIdentifier": "doclab.reactnativereanimatedtimer.example"
     },
     "android": {
       "adaptiveIcon": {
@@ -22,7 +22,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "reanimatedchrono.example"
+      "package": "doclab.reactnativereanimatedtimer.example"
     },
     "web": {
       "favicon": "./assets/favicon.png"

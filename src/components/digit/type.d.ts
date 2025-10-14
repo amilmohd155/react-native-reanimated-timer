@@ -1,13 +1,10 @@
-import type { AnimatedProps } from 'react-native-reanimated';
-import type { AnimationDirection } from '../../types/timer';
-import type { StyleProp, TextProps, TextStyle } from 'react-native';
+import type { TextProps } from 'react-native';
+import type { DigitType } from '../../constants';
 
-export interface DigitConfig {
-  animationDelay?: number;
-  animationDuration?: number;
-  animationDistance?: number;
-  animationDirection?: AnimationDirection;
-  entering?: AnimatedProps<TextProps>['entering'];
-  exiting?: AnimatedProps<TextProps>['exiting'];
-  style?: StyleProp<TextStyle>;
-}
+type DigitProps = Omit<TextProps, 'children'> & {
+  /**
+   * The type of digit to display (e.g., "daysTens" | "daysUnits")
+   * @see DigitType
+   */
+  digitType: DigitType;
+};
