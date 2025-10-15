@@ -8,6 +8,9 @@ import {
   type PressableProps,
 } from 'react-native';
 
+import './global.css';
+import { ZoomIn, ZoomOut } from 'react-native-reanimated';
+
 export default function App() {
   const timerRef = useRef<Timer>(null);
   const stopwatchRef = useRef<Stopwatch>(null);
@@ -18,21 +21,30 @@ export default function App() {
     30 * 60 * 1000; // 30 minutes
 
   return (
-    <View style={styles.container}>
+    <View
+      className="flex-1 items-center justify-center gap-2"
+      // style={styles.container}
+    >
       <Text style={styles.title}>Timer</Text>
       <Text>1 days 1 hours 30 minutes</Text>
       <Timer
+        mergeClassNames
         ref={timerRef}
-        autoStart={true}
+        autoStart={false}
         durationMs={durationMs}
-        digitStyle={styles.digit}
-        style={styles.componentContainer}
+        entering={ZoomIn}
+        exiting={ZoomOut}
+        // digitStyle={styles.digit}
+        // style={styles.componentContainer}
+        className="bg-black rounded-full px-10 py-4 gap-4"
+        digitContainerClassName="bg-white rounded-xl px-2"
+        digitClassName="text-red-500 font-bold text-3xl leading-tight text-center tabular-nums min-w-5"
       >
-        <Timer.Day />
-        <Timer.Hour />
-        <Timer.Minute />
-        <Timer.Second />
-        <Timer.Millisecond />
+        <Timer.Day className="bg-teal-500" />
+        <Timer.Hour className="bg-orange-300" />
+        <Timer.Minute className="bg-violet-300" />
+        <Timer.Second className="bg-slate-600" />
+        {/* <Timer.Millisecond /> */}
       </Timer>
       <View style={styles.buttonContainer}>
         <Button onPress={() => timerRef.current?.start()}>Start</Button>
@@ -43,22 +55,28 @@ export default function App() {
       <View style={styles.divider} />
       <Text style={styles.title}>Clock</Text>
       <Clock
-        format="12"
-        digitStyle={styles.digit}
-        style={styles.componentContainer}
+        // format="12"
+        // digitStyle={styles.digit}
+        // style={styles.componentContainer}
+        className="bg-black rounded-full px-10 py-4 gap-2"
+        digitContainerClassName="bg-white rounded-xl px-2 overflow-hidden"
+        digitClassName="text-red-500 font-bold text-3xl leading-tight text-center tabular-nums min-w-5"
       >
         <Clock.Hour />
         <Clock.Minute />
         <Clock.Second />
-        <Clock.Millisecond />
+        {/* <Clock.Millisecond /> */}
         <Clock.AMPM />
       </Clock>
       <View style={styles.divider} />
       <Text style={styles.title}>Stopwatch</Text>
       <Stopwatch
         ref={stopwatchRef}
-        style={styles.componentContainer}
-        digitStyle={styles.digit}
+        // style={styles.componentContainer}
+        // digitStyle={styles.digit}
+        className="bg-black rounded-full px-10 py-4 gap-4"
+        digitContainerClassName="bg-white rounded-xl px-2 overflow-hidden"
+        digitClassName="text-red-500 font-bold text-3xl leading-tight text-center tabular-nums min-w-5"
       >
         <Stopwatch.Hour />
         <Stopwatch.Minute />

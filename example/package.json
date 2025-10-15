@@ -12,16 +12,18 @@
     "@expo/metro-runtime": "~5.0.4",
     "expo": "~53.0.9",
     "expo-status-bar": "~2.2.3",
+    "nativewind": "4.1.23",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
-    "react-native-reanimated": "^3.17.5",
+    "react-native-reanimated": "3.17.5",
     "react-native-web": "~0.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "react-native-builder-bob": "^0.40.11",
-    "react-native-monorepo-config": "^0.1.9"
+    "react-native-monorepo-config": "^0.1.9",
+    "tailwindcss": "3.4.17"
   },
   "private": true
 }
