@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from 'react';
-import { Text, View } from 'react-native';
 import { useRootConfig } from '../../context';
 import { styles } from '../../styles';
 import type { SegmentProps } from './type';
+import { View, Text } from '../primitive';
 
 const MSComponent = forwardRef<View, SegmentProps>(
   ({ style, className, digitClassName, digitStyle, ...props }, ref) => {

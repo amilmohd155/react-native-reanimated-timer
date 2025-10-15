@@ -1,5 +1,4 @@
 import { forwardRef, memo } from 'react';
-import { View } from 'react-native';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
 import { RootContext } from '../../context';
 import { useTime } from '../../hooks/useTime';
@@ -11,6 +10,7 @@ import {
   DEFAULT_SKIP_EXITING,
 } from './constants';
 import type { ClockMethods, ClockProps } from './types';
+import { View } from '../primitive';
 
 type Clock = ClockMethods;
 
@@ -37,6 +37,7 @@ const ClockComponent = memo(
         className,
         digitContainerClassName,
         digitClassName,
+        mergeClassNames = false,
 
         children,
       },
@@ -68,6 +69,8 @@ const ClockComponent = memo(
               daysTens: 0,
               daysUnits: 0,
               ...timeUnits,
+
+              mergeClassNames,
             }}
           >
             <View style={[styles.container, style]} className={className}>

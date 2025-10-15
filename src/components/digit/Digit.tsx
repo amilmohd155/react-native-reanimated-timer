@@ -1,13 +1,8 @@
-import { StyleSheet, type TextProps } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
-import type { DigitType } from '../../constants';
 import { useRootConfig } from '../../context';
 import { enteringAnimation, exitingAnimation } from '../../utils/animation';
-
-type DigitProps = Omit<TextProps, 'children'> & {
-  digitType: DigitType;
-  className?: string;
-};
+import type { DigitProps } from './type';
 
 /**
  * A component that renders a single digit of a clock or timer.
@@ -126,7 +121,7 @@ const Digit = ({ digitType, style, className, ...props }: DigitProps) => {
             )
       }
       style={[styles.digit, digitStyle, style]}
-      className={className || digitClassName}
+      className={`${className} ${digitClassName}`}
       key={digitkey}
     >
       {digit}

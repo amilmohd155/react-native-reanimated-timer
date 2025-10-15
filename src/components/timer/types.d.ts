@@ -72,4 +72,9 @@ export interface TimerProps extends AnimationProps, CommonStylingProps {
    * @optional
    */
   onExpire?: () => void;
+  /**
+   * Children components, typically Timer segments like Day, Hour, Minute, Second, Millisecond.
+   * @type {React.ReactNode}
+   */
+  children: React.ReactNode;
 }

@@ -102,6 +102,15 @@ interface AnimationProps {
  * Common styling props for customizing the appearance of the time display.
  */
 interface CommonStylingProps {
+  /**
+   * If true, merges provided class names with parent class names instead of replacing them.
+   * @default false
+   * @type {boolean}
+   *
+   * Note: Requires tailwind-merge package for merging class names.
+   */
+  mergeClassNames?: boolean;
+
   /** Style for the overall container.
    * @default undefined
    * @type {StyleProp<ViewStyle>}

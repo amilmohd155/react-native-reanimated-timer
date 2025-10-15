@@ -1,5 +1,4 @@
-import { forwardRef, useImperativeHandle, type ReactNode } from 'react';
-import { View } from 'react-native';
+import { forwardRef, useImperativeHandle } from 'react';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
 import { RootContext } from '../../context';
 import { useTimer } from '../../hooks/useTimer';
@@ -12,10 +11,11 @@ import {
   DEFAULT_SKIP_EXITING,
 } from './constants';
 import type { TimerMethods, TimerProps } from './types';
+import { View } from '../primitive';
 
 type Timer = TimerMethods;
 
-const TimerComponent = forwardRef<Timer, TimerProps & { children: ReactNode }>(
+const TimerComponent = forwardRef<Timer, TimerProps>(
   (
     {
       durationMs: duration,
@@ -39,6 +39,7 @@ const TimerComponent = forwardRef<Timer, TimerProps & { children: ReactNode }>(
       digitContainerClassName,
       digitStyle,
       digitClassName,
+      mergeClassNames = false,
 
       children,
     },
@@ -84,6 +85,7 @@ const TimerComponent = forwardRef<Timer, TimerProps & { children: ReactNode }>(
             digitContainerClassName,
             digitStyle,
             digitClassName,
+            mergeClassNames,
 
             ampm: '',
           }}
@@ -122,56 +124,56 @@ const Timer = Object.assign(TimerComponent, {
   /**
    * Sub-component to display days.
    *
-   * To style individual segments, use the `style` and `className` props on this component.
+   * To style individual segments, use the `style` or `className` props on this component.
    *
-   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * However, it's recommended to use the `digitContainerStyle` or `digitContainerClassName` props on the root Timer component
    * to ensure consistent styling across all segments.
    *
-   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   * Note: To style digits inside this segment, use the `digitStyle` or `digitClassName` props on the root Timer component.
    */
   Day,
   /**
    * Sub-component to display hours.
    *
-   * To style individual segments, use the `style` and `className` props on this component.
+   * To style individual segments, use the `style` or `className` props on this component.
    *
-   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * However, it's recommended to use the `digitContainerStyle` or `digitContainerClassName` props on the root Timer component
    * to ensure consistent styling across all segments.
    *
-   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   * Note: To style digits inside this segment, use the `digitStyle` or `digitClassName` props on the root Timer component.
    */
   Hour,
   /**
    * Sub-component to display minutes.
    *
-   * To style individual segments, use the `style` and `className` props on this component.
+   * To style individual segments, use the `style` or `className` props on this component.
    *
-   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * However, it's recommended to use the `digitContainerStyle` or `digitContainerClassName` props on the root Timer component
    * to ensure consistent styling across all segments.
    *
-   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   * Note: To style digits inside this segment, use the `digitStyle` or `digitClassName` props on the root Timer component.
    */
   Minute,
   /**
    * Sub-component to display seconds.
    *
-   * To style individual segments, use the `style` and `className` props on this component.
+   * To style individual segments, use the `style` or `className` props on this component.
    *
-   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * However, it's recommended to use the `digitContainerStyle` or `digitContainerClassName` props on the root Timer component
    * to ensure consistent styling across all segments.
    *
-   * Note: To style digits inside this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   * Note: To style digits inside this segment, use the `digitStyle` or `digitClassName` props on the root Timer component.
    */
   Second,
   /**
    * Sub-component to display milliseconds.
    *
-   * To style individual segments, use the `style` and `className` props on this component.
+   * To style individual segments, use the `style` or `className` props on this component.
    *
-   * However, it's recommended to use the `digitContainerStyle` and `digitContainerClassName` props on the root Timer component
+   * However, it's recommended to use the `digitContainerStyle` or `digitContainerClassName` props on the root Timer component
    * to ensure consistent styling across all segments.
    *
-   * To style text in this segment, use the `digitStyle` and `digitClassName` props on the root Timer component.
+   * To style text in this segment, use the `digitStyle` or `digitClassName` props on the root Timer component.
    *
    * Note: Width of Millisecond segment is set to "auto" to accommodate text length irrespective of digitStyle width.
    * if you want to customize the width, use `digitStyle` prop on this component.

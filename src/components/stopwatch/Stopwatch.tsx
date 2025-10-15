@@ -1,5 +1,4 @@
 import { forwardRef, memo, useImperativeHandle } from 'react';
-import { View } from 'react-native';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
 import { RootContext } from '../../context';
 import { useStopwatch } from '../../hooks/useStopwatch';
@@ -12,6 +11,7 @@ import {
   DEFAULT_SKIP_EXITING,
 } from './constants';
 import type { StopwatchMethods, StopwatchProps } from './types';
+import { View } from '../primitive';
 
 type Stopwatch = StopwatchMethods;
 
@@ -41,6 +41,7 @@ const StopWatchComponent = memo(
         digitContainerClassName,
         digitStyle,
         digitClassName,
+        mergeClassNames = false,
 
         children,
       },
@@ -82,6 +83,7 @@ const StopWatchComponent = memo(
               digitClassName,
               digitContainerStyle,
               digitContainerClassName,
+              mergeClassNames,
 
               ampm: '',
             }}

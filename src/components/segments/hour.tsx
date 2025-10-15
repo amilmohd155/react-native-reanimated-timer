@@ -1,9 +1,9 @@
 import { forwardRef, useMemo } from 'react';
-import { View } from 'react-native';
 import { useRootConfig } from '../../context';
 import { styles } from '../../styles';
 import { Digit } from '../digit';
 import type { SegmentProps } from './type';
+import { View } from '../primitive';
 
 /**
  * Segment to display hours.
