@@ -41,7 +41,7 @@ const StopWatchComponent = memo(
         digitContainerClassName,
         digitStyle,
         digitClassName,
-        mergeClassNames = false,
+        twMerge = false,
 
         children,
       },
@@ -83,7 +83,7 @@ const StopWatchComponent = memo(
               digitClassName,
               digitContainerStyle,
               digitContainerClassName,
-              mergeClassNames,
+              twMerge,
 
               ampm: '',
             }}

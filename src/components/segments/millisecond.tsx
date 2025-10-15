@@ -1,45 +1,10 @@
-import { forwardRef, useMemo } from 'react';
-import { useRootConfig } from '../../context';
-import { styles } from '../../styles';
+import { forwardRef } from 'react';
 import type { SegmentProps } from './type';
-import { View, Text } from '../primitive';
+import { View } from '../primitive';
+import { SpecialSegment } from './common';
 
-const MSComponent = forwardRef<View, SegmentProps>(
-  ({ style, className, digitClassName, digitStyle, ...props }, ref) => {
-    const {
-      digitStyle: _digitStyle,
-      milliseconds,
-      digitClassName: _digitClassName,
-      digitContainerClassName,
-      digitContainerStyle,
-    } = useRootConfig();
-
-    const containerStyle = useMemo(
-      () => [digitContainerStyle, style],
-      [digitContainerStyle, style]
-    );
-
-    const digitCombinedStyle = useMemo(
-      () => [styles.otherDigits, _digitStyle, styles.widthAuto, digitStyle],
-      [_digitStyle, digitStyle]
-    );
-
-    return (
-      <View
-        {...props}
-        ref={ref}
-        style={containerStyle}
-        className={className || digitContainerClassName}
-      >
-        <Text
-          style={digitCombinedStyle}
-          className={digitClassName || _digitClassName}
-        >
-          {String(milliseconds).padStart(3, '0')}
-        </Text>
-      </View>
-    );
-  }
-);
+const MSComponent = forwardRef<View, SegmentProps>((props, ref) => (
+  <SpecialSegment ref={ref} type="milliseconds" {...props} />
+));
 
 export { MSComponent as Millisecond };

@@ -1,39 +1,10 @@
-import { forwardRef, useMemo } from 'react';
-import { useRootConfig } from '../../context';
-import { styles } from '../../styles';
-import { Digit } from '../digit';
+import { forwardRef } from 'react';
 import type { SegmentProps } from './type';
 import { View } from '../primitive';
+import { Segment } from './common';
 
-const SecondComponent = forwardRef<View, SegmentProps>(
-  ({ style, className, digitClassName, digitStyle, ...props }, ref) => {
-    const { digitContainerClassName, digitContainerStyle } = useRootConfig();
-
-    const containerStyle = useMemo(
-      () => [styles.segment, digitContainerStyle, style],
-      [digitContainerStyle, style]
-    );
-
-    return (
-      <View
-        {...props}
-        ref={ref}
-        style={containerStyle}
-        className={className || digitContainerClassName}
-      >
-        <Digit
-          digitType="secondsTens"
-          style={digitStyle}
-          className={digitClassName}
-        />
-        <Digit
-          digitType="secondsUnits"
-          style={digitStyle}
-          className={digitClassName}
-        />
-      </View>
-    );
-  }
-);
+const SecondComponent = forwardRef<View, SegmentProps>((props, ref) => (
+  <Segment ref={ref} value={['secondsTens', 'secondsUnits']} {...props} />
+));
 
 export { SecondComponent as Second };

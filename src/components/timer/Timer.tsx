@@ -39,7 +39,7 @@ const TimerComponent = forwardRef<Timer, TimerProps>(
       digitContainerClassName,
       digitStyle,
       digitClassName,
-      mergeClassNames = false,
+      twMerge = false,
 
       children,
     },
@@ -85,7 +85,7 @@ const TimerComponent = forwardRef<Timer, TimerProps>(
             digitContainerClassName,
             digitStyle,
             digitClassName,
-            mergeClassNames,
+            twMerge,
 
             ampm: '',
           }}

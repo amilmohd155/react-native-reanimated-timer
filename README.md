@@ -9,14 +9,16 @@ A Reanimated-powered library for creating smooth and customizable timers, stopwa
 
 ## Features
 
-- 🧩 **Highly Composible** - All components — Timer, Stopwatch, and Clock — are now fully composable.
-- ⚡ **High Performance** – Achieves smooth 60FPS animations using Reanimated
-- 🎨 **Fully Customizable** – Configure behavior, appearance, and animations via flexible props
-- 🎞️ **Built-in Entry & Exit Animations** – Seamlessly integrate with Reanimated transitions
-- 🧩 **Powered by Reanimated v3** – Utilizes the latest version for optimal performance and capabilities
-- 🎨 Support Classnames
-- 🚀 **Expo-Compatible** – Works out of the box with managed Expo projects
-- ✨ **TypeScript First**– Fully typed for better DX and safer code
+Features
+
+- 🧩 **Highly Composable** – All components — Timer, Stopwatch, and Clock — are fully composable for complete flexibility.
+- ⚡ **High Performance** – Achieves smooth 60 FPS animations powered by Reanimated.
+- 🎨 **Fully Customizable** – Configure behavior, appearance, and animations through flexible props.
+- 🎞️ **Built-in Entry & Exit Animations** – Seamlessly integrate with Reanimated transitions.
+- 🧱 **Powered by Reanimated** – Built with Reanimated for smooth, performant, and reliable animations.
+- 🎨 **Supports className Prop** – Works with `NativeWind` for Tailwind-style styling, and optionally uses `tailwind-merge` for intelligent class merging.
+- 🚀 **Expo-Compatible** – Works out of the box with managed Expo projects.
+- ✨ **TypeScript First** – Fully typed for an enhanced developer experience and safer code.
 
 ## Components
 
@@ -29,7 +31,7 @@ A Reanimated-powered library for creating smooth and customizable timers, stopwa
 All components — Timer, Stopwatch, and Clock — are now fully composable.
 
 They share a common set of time unit segments:
-Day, Hour, Minute, Second, and Millisecond.
+Day, Hour, Minute, Second, and Millisecond, AMPM.
 
 This means you have full control over how time is displayed and animated.
 You can mix and match these building blocks to create custom layouts, animations, and styles that fit your app perfectly.
@@ -46,27 +48,26 @@ export default function App() {
       <Timer.Second />
       <Timer.Millisecond />
     </Timer>
+
+    <Stopwatch autoStart>
+      <Stopwatch.Hour />
+      <Stopwatch.Minute />
+      <Stopwatch.Second />
+    </Stopwatch>
+
+    <Clock format="12">
+      <Clock.Hour />
+      <Clock.Minute />
+      <Clock.Second />
+      <Clock.Millisecond />
+      <Clock.AMPM />
+    </Clock>
   );
 }
+
 ```
 
-You can also use the same composable structure with the Stopwatch and Clock components:
-
-```tsx
-<Stopwatch autoStart>
-  <Stopwatch.Hour />
-  <Stopwatch.Minute />
-  <Stopwatch.Second />
-</Stopwatch>
-
-<Clock format="12">
-  <Clock.Hour />
-  <Clock.Minute />
-  <Clock.Second />
-</Clock>
-```
-
-Why Composability?
+#### Why Composability?
 
 This design enables:
 
@@ -96,6 +97,17 @@ npm install @docren/react-native-reanimated-timer
 
 > Note: This package is built on top of [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/), so make sure it’s properly installed and configured in your project.
 > Refer to the [Reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started) if you haven’t already set it up.
+
+#### Optional Peer Dependency
+
+For better and more predictable class name merging, you can optionally install [tailwind-merge](https://www.npmjs.com/package/tailwind-merge) >= 3.0.0:
+
+```sh
+npm install tailwind-merge
+```
+
+> When twMerge={true}, the library uses tailwind-merge to intelligently combine class names.
+> If tailwind-merge is not installed, it will gracefully fall back to the default behavior — the nearest className wins.
 
 ## Usage
 
@@ -232,30 +244,37 @@ For additional props, refer to the [Common Props](#common-props) section.
 | exiting                 | EntryOrExitLayoutType | undefined | Custom exiting animation from [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/custom-animations) . |
 | skipEntering            | boolean               | true      | Useful for preventing initial animation on mount.                                                                                                      |
 | skipExiting             | boolean               | false     | Useful for preventing exit animation on unmount.                                                                                                       |
-| style                   | ViewStyle             | undefined | Style for grouped digit's container. eg: [tens of seconds, units of seconds]                                                                           |
-| className               | string                | undefined | Styling for component                                                                                                                                  |
+| twMerge                 | boolean               | false     | Uses `tailwind-merge` to merge classNames.                                                                                                             |
+| style                   | ViewStyle             | undefined | Style for the component.                                                                                                                               |
+| className               | string                | undefined | Styling for component.                                                                                                                                 |
 | digitContainerStyle     | ViewStyle             | undefined | Style for grouped digit's container. eg: [tens of seconds, units of seconds]                                                                           |
 | digitContainerClassName | string                | undefined | Styling for digit's container                                                                                                                          |
 | digitStyle              | TextStyle             | undefined | Style for the individual digits, eg: Tens of seconds                                                                                                   |
 | digitClassName          | string                | undefined | Styling the individual digits                                                                                                                          |
 
+> When `twMerge={true}`, the library uses `tailwind-merge` to intelligently combine class names.
+> If tailwind-merge is not installed, it will gracefully fall back to the default behavior — the nearest className wins.
+
 ## Segments
 
-- **Day** (Not available for Clock)
-- **Hour**
-- **Minute**
-- **Second**
-- **Millisecond**
-- **AMPM** (avaible only in Clock)
+Each time unit is represented by an individual Segment component.
+These can be freely composed to control what parts of the time are displayed.
 
-| Prop           | Type      | Default   | Description              |
-| -------------- | --------- | --------- | ------------------------ |
-| className      | string    | undefined | styling for the segment  |
-| style          | ViewStyle | undefined | styling for the segement |
-| digitClassName | string    | undefined | styling for the digits   |
-| digitStyle     | TextStyle | undefined | styling for the digits   |
+- Day (not available for Clock)
+- Hour
+- Minute
+- Second
+- Millisecond
+- AM/PM (available only for Clock)
 
-> Even though digit(Style/className) is provided here, it is preferred to use the digitStyle at the root level to ensure a common styling thru all segments
+| Prop           | Type      | Default   | Description                             |
+| -------------- | --------- | --------- | --------------------------------------- |
+| className      | string    | undefined | Styles the segment container            |
+| style          | ViewStyle | undefined | Inline styles for the segment container |
+| digitClassName | string    | undefined | Styles applied to the individual digits |
+| digitStyle     | TextStyle | undefined | Inline styles for the individual digits |
+
+> While each segment supports its own digitStyle and digitClassName, it’s generally recommended to define digitStyle at the root level. This ensures consistent styling across all segments for a unified look.
 
 ## Related
 

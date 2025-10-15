@@ -3,6 +3,8 @@ import Animated from 'react-native-reanimated';
 import { useRootConfig } from '../../context';
 import { enteringAnimation, exitingAnimation } from '../../utils/animation';
 import type { DigitProps } from './type';
+import { memo, useMemo } from 'react';
+import { combineClassNames } from '../../utils/style';
 
 /**
  * A component that renders a single digit of a clock or timer.
@@ -32,18 +34,8 @@ import type { DigitProps } from './type';
  * @param {React.ReactNode} props.children - The digit to be rendered.
  * @returns {JSX.Element} The rendered component.
  */
-const Digit = ({ digitType, style, className, ...props }: DigitProps) => {
+const Digit = memo(({ digitType, style, className, ...props }: DigitProps) => {
   const {
-    daysTens,
-    daysUnits,
-    hoursTens,
-    hoursUnits,
-    minutesTens,
-    minutesUnits,
-    secondsTens,
-    secondsUnits,
-    milliseconds,
-
     digitStyle,
     digitClassName,
 
@@ -53,81 +45,75 @@ const Digit = ({ digitType, style, className, ...props }: DigitProps) => {
     animationDuration,
     animationDistance,
     animationDirection,
+    twMerge,
+    ...digits
   } = useRootConfig();
 
-  let digit: number = 0;
-  let digitkey = '';
+  const digit = digits[digitType];
+  const digitkey = `${digit}-${digitType}`;
 
-  switch (digitType) {
-    case 'daysTens':
-      digit = daysTens;
-      digitkey = `${daysTens}-daysTens`;
-      break;
-    case 'daysUnits':
-      digit = daysUnits;
-      digitkey = `${daysUnits}-daysUnits`;
-      break;
-    case 'hoursTens':
-      digit = hoursTens;
-      digitkey = `${hoursTens}-hoursTens`;
-      break;
-    case 'hoursUnits':
-      digit = hoursUnits;
-      digitkey = `${hoursUnits}-hoursUnits`;
-      break;
-    case 'minutesTens':
-      digit = minutesTens;
-      digitkey = `${minutesTens}-minutesTens`;
-      break;
-    case 'minutesUnits':
-      digit = minutesUnits;
-      digitkey = `${minutesUnits}-minutesUnits`;
-      break;
-    case 'secondsTens':
-      digit = secondsTens;
-      digitkey = `${secondsTens}-secondsTens`;
-      break;
-    case 'secondsUnits':
-      digit = secondsUnits;
-      digitkey = `${secondsUnits}-secondsUnits`;
-      break;
-    case 'milliseconds':
-      digit = milliseconds;
-      digitkey = `${milliseconds}-milliseconds`;
-      break;
-  }
+  // #region Memos
+  // Memos for entering and exiting animations
+  const enteringAnim = useMemo(
+    () =>
+      entering ??
+      enteringAnimation(
+        animationDelay,
+        animationDuration,
+        animationDistance,
+        animationDirection
+      ),
+    [
+      entering,
+      animationDelay,
+      animationDuration,
+      animationDistance,
+      animationDirection,
+    ]
+  );
+
+  const exitingAnim = useMemo(
+    () =>
+      exiting ??
+      exitingAnimation(
+        animationDelay,
+        animationDuration,
+        animationDistance,
+        animationDirection
+      ),
+    [
+      exiting,
+      animationDelay,
+      animationDuration,
+      animationDistance,
+      animationDirection,
+    ]
+  );
+
+  const mergedClassName = useMemo(
+    () =>
+      combineClassNames({
+        merge: twMerge,
+        fallbackClassName: digitClassName,
+        className,
+      }),
+    [className, digitClassName, twMerge]
+  );
+  // #endregion
 
   return (
     <Animated.Text
       {...props}
-      entering={
-        entering
-          ? entering
-          : enteringAnimation(
-              animationDelay,
-              animationDuration,
-              animationDistance,
-              animationDirection
-            )
-      }
-      exiting={
-        exiting
-          ? exiting
-          : exitingAnimation(
-              animationDelay,
-              animationDuration,
-              animationDistance,
-              animationDirection
-            )
-      }
+      entering={enteringAnim}
+      exiting={exitingAnim}
       style={[styles.digit, digitStyle, style]}
-      className={`${className} ${digitClassName}`}
+      className={mergedClassName}
       key={digitkey}
     >
       {digit}
     </Animated.Text>
   );
-};
+});
 
 export default Digit;
 

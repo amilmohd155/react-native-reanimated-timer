@@ -35,7 +35,7 @@ export type RootConfig = TimeUnits & {
   digitStyle?: StyleProp<TextStyle>;
   digitClassName?: string;
 
-  mergeClassNames: boolean;
+  twMerge: boolean;
 
   milliseconds: number;
 };

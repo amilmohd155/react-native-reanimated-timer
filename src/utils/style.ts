@@ -1,22 +1,36 @@
+let twMerge: ((...classLists: any[]) => string) | undefined;
+
+try {
+  // Dynamically require to avoid build-time resolution
+  twMerge = require('tailwind-merge').twMerge;
+} catch {
+  twMerge = undefined;
+}
+
+/**
+ * Utility function to combine and optionally merge Tailwind CSS class names.
+ * Uses `tailwind-merge` if available to intelligently merge class names.
+ *
+ */
 export function combineClassNames({
   merge,
   fallbackClassName,
   className,
-  twMerge,
 }: {
   merge: boolean;
   fallbackClassName?: string;
   className?: string;
-  twMerge?: (a?: string, b?: string) => string;
 }) {
   if (!merge) {
     return className || fallbackClassName;
   }
+
   if (!twMerge) {
     console.warn(
-      'mergeClassNames is enabled but tailwind-merge is not installed. Please install tailwind-merge to use this feature.'
+      'combineClassNames: merge=true but "tailwind-merge" is not installed. Please install it to use merging.'
     );
     return className || fallbackClassName;
   }
+
   return twMerge(fallbackClassName, className);
 }

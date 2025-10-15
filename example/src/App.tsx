@@ -28,7 +28,7 @@ export default function App() {
       <Text style={styles.title}>Timer</Text>
       <Text>1 days 1 hours 30 minutes</Text>
       <Timer
-        mergeClassNames
+        // mergeClassNames
         ref={timerRef}
         autoStart={false}
         durationMs={durationMs}

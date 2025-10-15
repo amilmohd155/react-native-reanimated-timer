@@ -103,13 +103,13 @@ interface AnimationProps {
  */
 interface CommonStylingProps {
   /**
-   * If true, merges provided class names with parent class names instead of replacing them.
+   * If true, use tailwind-merge to merge class names instead of replacing them.
    * @default false
    * @type {boolean}
    *
    * Note: Requires tailwind-merge package for merging class names.
    */
-  mergeClassNames?: boolean;
+  twMerge?: boolean;
 
   /** Style for the overall container.
    * @default undefined

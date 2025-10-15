@@ -37,7 +37,7 @@ const ClockComponent = memo(
         className,
         digitContainerClassName,
         digitClassName,
-        mergeClassNames = false,
+        twMerge = false,
 
         children,
       },
@@ -70,7 +70,7 @@ const ClockComponent = memo(
               daysUnits: 0,
               ...timeUnits,
 
-              mergeClassNames,
+              twMerge,
             }}
           >
             <View style={[styles.container, style]} className={className}>
