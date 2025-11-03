@@ -86,8 +86,9 @@ Each component (Timer, Stopwatch, Clock) manages its own internal timing logic w
   This library is heavily inspired by [`react-native-animated-stopwatch-timer`](https://github.com/rgommezz/react-native-animated-stopwatch-timer) and the accompanying blog. It’s a great resource for understanding animation patterns with Reanimated—highly recommended!
 
 - 🧠 **Custom Hook Design**  
-  The internal time management logic draws inspiration from [`react-timer-hook`](https://github.com/amrlabib/react-timer-hook). Chose not to use it as a direct dependency to allow for more fine-grained control and customization.  
-  If you're only looking for a headless timekeeping hook (without UI), definitely consider using `react-timer-hook` directly.
+  The internal time management logic is built on top of [`react-timer-hook`](https://github.com/amrlabib/react-timer-hook), using it as a core dependency for reliable timekeeping. This allows leveraging its proven functionality while layering custom logic and controls tailored to the app’s specific needs.
+
+  If you only need a headless timekeeping hook (without UI), you can use react-timer-hook directly.
 
 ### Installation
 
