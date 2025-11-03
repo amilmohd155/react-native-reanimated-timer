@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { useRootConfig } from '../../context';
+import { useAnimationConfig, useStyleConfig } from '../../context';
 import { enteringAnimation, exitingAnimation } from '../../utils/animation';
 import type { DigitProps } from './type';
 import { memo, useMemo } from 'react';
 import { combineClassNames } from '../../utils/style';
+import { useTime } from '../../context/time';
 
 /**
  * A component that renders a single digit of a clock or timer.
@@ -36,20 +37,18 @@ import { combineClassNames } from '../../utils/style';
  */
 const Digit = memo(({ digitType, style, className, ...props }: DigitProps) => {
   const {
-    digitStyle,
-    digitClassName,
-
     exiting,
     entering,
     animationDelay,
     animationDuration,
     animationDistance,
     animationDirection,
-    twMerge,
-    ...digits
-  } = useRootConfig();
+  } = useAnimationConfig();
 
-  const digit = digits[digitType];
+  const { twMerge, digitClassName, digitStyle } = useStyleConfig();
+
+  const digit = useTime((state) => state[digitType]);
+
   const digitkey = `${digit}-${digitType}`;
 
   // #region Memos
@@ -115,7 +114,7 @@ const Digit = memo(({ digitType, style, className, ...props }: DigitProps) => {
   );
 });
 
-export default Digit;
+export { Digit };
 
 const styles = StyleSheet.create({
   digit: { textAlign: 'center' },

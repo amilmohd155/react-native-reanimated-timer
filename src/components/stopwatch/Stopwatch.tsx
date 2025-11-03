@@ -1,19 +1,21 @@
-import { forwardRef, memo, useImperativeHandle } from 'react';
+import { forwardRef, memo, useImperativeHandle, useRef } from 'react';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
-import { RootContext } from '../../context';
-import { useStopwatch } from '../../hooks/useStopwatch';
 import { styles } from '../../styles';
 import { Day, Hour, Millisecond, Minute, Second } from '../segments';
-import {
+import type { StopwatchMethods, StopwatchProps } from './types';
+import { View } from '../primitive';
+import { AnimationProvider, StyleProvider, TimeProvider } from '../../context';
+import { StopwatchConstants } from '../../constants';
+import { StopwatchManager } from './Manager';
+
+type Stopwatch = StopwatchMethods;
+
+const {
   DEFAULT_AUTO_START,
   DEFAULT_INTERVAL_MS,
   DEFAULT_SKIP_ENTERING,
   DEFAULT_SKIP_EXITING,
-} from './constants';
-import type { StopwatchMethods, StopwatchProps } from './types';
-import { View } from '../primitive';
-
-type Stopwatch = StopwatchMethods;
+} = StopwatchConstants;
 
 const StopWatchComponent = memo(
   forwardRef<Stopwatch, StopwatchProps>(
@@ -47,20 +49,13 @@ const StopWatchComponent = memo(
       },
       ref
     ) => {
-      const { start, pause, reset, getSnapshot, getSnapshotAsDigits } =
-        useStopwatch({
-          autoStart,
-          interval,
-          offsetTimestamp,
-        });
-
-      const timeUnits = getSnapshotAsDigits();
+      const syncRef = useRef<Stopwatch>(null);
 
       useImperativeHandle(ref, () => ({
-        start,
-        pause,
-        reset,
-        getSnapshot,
+        start: () => syncRef.current?.start(),
+        pause: () => syncRef.current?.pause(),
+        reset: (autoStartArg?: boolean, offsetArg?: Date) =>
+          syncRef.current?.reset(autoStartArg, offsetArg),
       }));
 
       return (
@@ -68,30 +63,34 @@ const StopWatchComponent = memo(
           skipEntering={skipEntering}
           skipExiting={skipExiting}
         >
-          <RootContext.Provider
-            value={{
-              animationDelay,
-              animationDuration,
-              animationDistance,
-              animationDirection,
-              entering,
-              exiting,
-
-              ...timeUnits,
-
-              digitStyle,
-              digitClassName,
-              digitContainerStyle,
-              digitContainerClassName,
-              twMerge,
-
-              ampm: '',
-            }}
+          <StyleProvider
+            twMerge={twMerge}
+            digitStyle={digitStyle}
+            digitClassName={digitClassName}
+            digitContainerStyle={digitContainerStyle}
+            digitContainerClassName={digitContainerClassName}
           >
-            <View style={[styles.container, style]} className={className}>
-              {children}
-            </View>
-          </RootContext.Provider>
+            <AnimationProvider
+              entering={entering}
+              exiting={exiting}
+              animationDelay={animationDelay}
+              animationDuration={animationDuration}
+              animationDistance={animationDistance}
+              animationDirection={animationDirection}
+            >
+              <TimeProvider>
+                <StopwatchManager
+                  ref={syncRef}
+                  autoStart={autoStart}
+                  offsetTimestamp={offsetTimestamp}
+                  intervalMs={interval}
+                />
+                <View style={[styles.container, style]} className={className}>
+                  {children}
+                </View>
+              </TimeProvider>
+            </AnimationProvider>
+          </StyleProvider>
         </LayoutAnimationConfig>
       );
     }

@@ -1,12 +1,48 @@
-import { createContext, useContext } from 'react';
-import type { RootConfig } from './type';
+import { createContext, useContext, type PropsWithChildren } from 'react';
+import type { AnimationConfig, StyleConfig } from './type';
 
-export const RootContext = createContext<RootConfig | null>(null);
+const AnimationContext = createContext<AnimationConfig | null>(null);
 
-export const useRootConfig = () => {
-  const context = useContext(RootContext);
+export const AnimationProvider = ({
+  children,
+  ...animationConfig
+}: PropsWithChildren<AnimationConfig>) => {
+  return (
+    <AnimationContext.Provider value={animationConfig}>
+      {children}
+    </AnimationContext.Provider>
+  );
+};
+
+export const useAnimationConfig = () => {
+  const context = useContext(AnimationContext);
   if (!context) {
-    throw new Error('useRootConfig must be used within a RootConfigProvider');
+    throw new Error(
+      'useAnimationConfig must be used within an AnimationProvider'
+    );
   }
   return context;
 };
+
+const StyleContext = createContext<StyleConfig | null>(null);
+
+export const StyleProvider = ({
+  children,
+  ...styleConfig
+}: PropsWithChildren<StyleConfig>) => {
+  return (
+    <StyleContext.Provider value={styleConfig}>
+      {children}
+    </StyleContext.Provider>
+  );
+};
+
+export const useStyleConfig = () => {
+  const context = useContext(StyleContext);
+  if (!context) {
+    throw new Error('useStyleConfig must be used within a StyleProvider');
+  }
+  return context;
+};
+
+export { TimeProvider, useTime } from './time';

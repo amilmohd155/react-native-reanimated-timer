@@ -7,12 +7,14 @@ import {
   type StyleProps,
 } from 'react-native-reanimated';
 import type { AnimationDirection } from '../types';
-import {
+import { AnimationConstants } from '../constants';
+
+const {
   DEFAULT_ANIMATION_DELAY,
   DEFAULT_ANIMATION_DIRECTION,
   DEFAULT_ANIMATION_DISTANCE,
   DEFAULT_ANIMATION_DURATION,
-} from '../constants';
+} = AnimationConstants;
 
 /**
  * Creates an animation that makes the element appear as if it is coming from the

@@ -1,5 +1,5 @@
 import type { TextProps } from 'react-native';
-import type { DigitType } from '../../constants';
+import type { DigitType } from '../../types';
 
 type DigitProps = Omit<TextProps, 'children'> & {
   /**

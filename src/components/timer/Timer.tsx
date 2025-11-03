@@ -1,25 +1,27 @@
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
-import { RootContext } from '../../context';
-import { useTimer } from '../../hooks/useTimer';
 import { styles } from '../../styles';
 import { Day, Hour, Millisecond, Minute, Second } from '../segments';
-import {
+import type { TimerMethods, TimerProps } from './types';
+import { View } from '../primitive';
+import { AnimationProvider, StyleProvider, TimeProvider } from '../../context';
+import { TimerConstants } from '../../constants';
+import { TimerManager } from './Manager';
+
+type Timer = TimerMethods;
+
+const {
   DEFAULT_AUTO_START,
   DEFAULT_INTERVAL_MS,
   DEFAULT_SKIP_ENTERING,
   DEFAULT_SKIP_EXITING,
-} from './constants';
-import type { TimerMethods, TimerProps } from './types';
-import { View } from '../primitive';
-
-type Timer = TimerMethods;
+} = TimerConstants;
 
 const TimerComponent = forwardRef<Timer, TimerProps>(
   (
     {
-      durationMs: duration,
-      intervalMs: interval = DEFAULT_INTERVAL_MS,
+      durationMs,
+      intervalMs = DEFAULT_INTERVAL_MS,
       autoStart = DEFAULT_AUTO_START,
       onExpire,
 
@@ -45,23 +47,15 @@ const TimerComponent = forwardRef<Timer, TimerProps>(
     },
     ref
   ) => {
-    const { start, pause, resume, restart, getSnapshotAsDigits, getSnapshot } =
-      useTimer({
-        duration,
-        interval,
-        autoStart,
-        onExpire,
-      });
-
-    const timeUnits = getSnapshotAsDigits();
+    const syncRef = useRef<Timer>(null);
 
     useImperativeHandle(ref, () => ({
-      start,
-      pause,
-      resume,
-      restart,
-      reset: () => restart(duration, autoStart),
-      getSnapshot,
+      start: () => syncRef.current?.start(),
+      pause: () => syncRef.current?.pause(),
+      resume: () => syncRef.current?.resume(),
+      restart: (newDurationMs: number, newAutoStart?: boolean) =>
+        syncRef.current?.restart(newDurationMs, newAutoStart),
+      reset: () => syncRef.current?.reset(),
     }));
 
     return (
@@ -69,32 +63,36 @@ const TimerComponent = forwardRef<Timer, TimerProps>(
         skipEntering={skipEntering}
         skipExiting={skipExiting}
       >
-        <RootContext.Provider
-          value={{
-            // Animation Config
-            animationDelay,
-            animationDuration,
-            animationDistance,
-            animationDirection,
-            entering,
-            exiting,
-            //Time units
-            ...timeUnits,
-            // Styles
-            digitContainerStyle,
-            digitContainerClassName,
-            digitStyle,
-            digitClassName,
-            twMerge,
-
-            ampm: '',
-          }}
+        <StyleProvider
+          twMerge={twMerge}
+          digitContainerStyle={digitContainerStyle}
+          digitContainerClassName={digitContainerClassName}
+          digitStyle={digitStyle}
+          digitClassName={digitClassName}
         >
-          {/* Timer Container */}
-          <View style={[styles.container, style]} className={className}>
-            {children}
-          </View>
-        </RootContext.Provider>
+          <AnimationProvider
+            animationDelay={animationDelay}
+            animationDirection={animationDirection}
+            animationDuration={animationDuration}
+            animationDistance={animationDistance}
+            entering={entering}
+            exiting={exiting}
+          >
+            <TimeProvider>
+              <TimerManager
+                durationMs={durationMs}
+                intervalMs={intervalMs}
+                autoStart={autoStart}
+                onExpire={onExpire}
+                ref={syncRef}
+              />
+              {/* Timer Container */}
+              <View style={[styles.container, style]} className={className}>
+                {children}
+              </View>
+            </TimeProvider>
+          </AnimationProvider>
+        </StyleProvider>
       </LayoutAnimationConfig>
     );
   }
@@ -106,16 +104,15 @@ const TimerComponent = forwardRef<Timer, TimerProps>(
  *
  * @example
  * ```tsx
- * <Timer
+ * <TimerProps
  *   durationMs={durationMs} // Required duration in milliseconds
  * >
- *  // Child components representing time units
  *   <Timer.Day />
  *   <Timer.Hour />
  *   <Timer.Minute />
  *   <Timer.Second />
  *   <Timer.Millisecond />
- * </Timer>
+ * </TimerProps>
  * ```
  * Prefer using the `digitContainerStyle`, `digitContainerClassName`, `digitStyle`, and `digitClassName` props on the Timer component
  * to style all segments and digits uniformly instead of styling individual segment components.

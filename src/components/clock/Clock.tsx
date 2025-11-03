@@ -1,25 +1,22 @@
 import { forwardRef, memo } from 'react';
 import { LayoutAnimationConfig } from 'react-native-reanimated';
-import { RootContext } from '../../context';
-import { useTime } from '../../hooks/useTime';
 import { styles } from '../../styles';
 import { AMPM, Hour, Millisecond, Minute, Second } from '../segments';
-import {
-  DEFAULT_INTERVAL_MS,
-  DEFAULT_SKIP_ENTERING,
-  DEFAULT_SKIP_EXITING,
-} from './constants';
 import type { ClockMethods, ClockProps } from './types';
 import { View } from '../primitive';
+import { AnimationProvider, StyleProvider, TimeProvider } from '../../context';
+import { ClockConstants } from '../../constants';
+import { ClockManager } from './Manager';
 
-type Clock = ClockMethods;
+const { DEFAULT_INTERVAL_MS, DEFAULT_SKIP_EXITING, DEFAULT_SKIP_ENTERING } =
+  ClockConstants;
 
 const ClockComponent = memo(
-  forwardRef<Clock, ClockProps>(
+  forwardRef<ClockMethods, ClockProps>(
     (
       {
         format = '24',
-        intervalMs: interval = DEFAULT_INTERVAL_MS,
+        intervalMs = DEFAULT_INTERVAL_MS,
 
         animationDelay,
         animationDuration,
@@ -43,40 +40,34 @@ const ClockComponent = memo(
       },
       _
     ) => {
-      const { getSnapshotAsDigits } = useTime({ format, interval });
-
-      const timeUnits = getSnapshotAsDigits();
-
       return (
         <LayoutAnimationConfig
           skipExiting={skipExiting}
           skipEntering={skipEntering}
         >
-          <RootContext.Provider
-            value={{
-              animationDelay,
-              animationDuration,
-              animationDistance,
-              animationDirection,
-              entering,
-              exiting,
-
-              digitStyle,
-              digitContainerStyle,
-              digitClassName,
-              digitContainerClassName,
-
-              daysTens: 0,
-              daysUnits: 0,
-              ...timeUnits,
-
-              twMerge,
-            }}
+          <StyleProvider
+            twMerge={twMerge}
+            digitContainerStyle={digitContainerStyle}
+            digitContainerClassName={digitContainerClassName}
+            digitStyle={digitStyle}
+            digitClassName={digitClassName}
           >
-            <View style={[styles.container, style]} className={className}>
-              {children}
-            </View>
-          </RootContext.Provider>
+            <AnimationProvider
+              animationDelay={animationDelay}
+              animationDuration={animationDuration}
+              animationDistance={animationDistance}
+              animationDirection={animationDirection}
+              entering={entering}
+              exiting={exiting}
+            >
+              <TimeProvider>
+                <ClockManager intervalMs={intervalMs} format={format} />
+                <View style={[styles.container, style]} className={className}>
+                  {children}
+                </View>
+              </TimeProvider>
+            </AnimationProvider>
+          </StyleProvider>
         </LayoutAnimationConfig>
       );
     }

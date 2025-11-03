@@ -34,39 +34,44 @@ export default function App() {
         durationMs={durationMs}
         entering={ZoomIn}
         exiting={ZoomOut}
+        onExpire={() => {
+          console.log('Timer expired at ', new Date().toLocaleTimeString());
+        }}
         // digitStyle={styles.digit}
         // style={styles.componentContainer}
         className="bg-black rounded-full px-10 py-4 gap-4"
-        digitContainerClassName="bg-white rounded-xl px-2"
-        digitClassName="text-red-500 font-bold text-3xl leading-tight text-center tabular-nums min-w-5"
+        digitClassName="font-bold text-white text-3xl leading-tight text-center tabular-nums min-w-5"
       >
-        <Timer.Day className="bg-teal-500" />
-        <Timer.Hour className="bg-orange-300" />
-        <Timer.Minute className="bg-violet-300" />
-        <Timer.Second className="bg-slate-600" />
+        <Timer.Day />
+        <Timer.Hour />
+        <Timer.Minute />
+        <Timer.Second />
         {/* <Timer.Millisecond /> */}
       </Timer>
-      <View style={styles.buttonContainer}>
+      <View className="flex-row gap-2 flex-wrap items-center justify-center">
         <Button onPress={() => timerRef.current?.start()}>Start</Button>
         <Button onPress={() => timerRef.current?.pause()}>Pause</Button>
         <Button onPress={() => timerRef.current?.resume()}>Resume</Button>
         <Button onPress={() => timerRef.current?.reset()}>Reset</Button>
+        <Button onPress={() => timerRef.current?.restart(5000, true)}>
+          Restart 5s
+        </Button>
       </View>
+
       <View style={styles.divider} />
       <Text style={styles.title}>Clock</Text>
       <Clock
         // format="12"
         // digitStyle={styles.digit}
         // style={styles.componentContainer}
-        className="bg-black rounded-full px-10 py-4 gap-2"
-        digitContainerClassName="bg-white rounded-xl px-2 overflow-hidden"
-        digitClassName="text-red-500 font-bold text-3xl leading-tight text-center tabular-nums min-w-5"
+        className="bg-black rounded-full px-10 py-4 gap-4"
+        digitClassName="font-bold text-white text-3xl leading-tight text-center tabular-nums min-w-5"
       >
         <Clock.Hour />
         <Clock.Minute />
         <Clock.Second />
-        {/* <Clock.Millisecond /> */}
-        <Clock.AMPM />
+        <Clock.Millisecond />
+        <Clock.AMPM digitClassName="uppercase text-white text-3xl font-normal" />
       </Clock>
       <View style={styles.divider} />
       <Text style={styles.title}>Stopwatch</Text>
@@ -75,8 +80,8 @@ export default function App() {
         // style={styles.componentContainer}
         // digitStyle={styles.digit}
         className="bg-black rounded-full px-10 py-4 gap-4"
-        digitContainerClassName="bg-white rounded-xl px-2 overflow-hidden"
-        digitClassName="text-red-500 font-bold text-3xl leading-tight text-center tabular-nums min-w-5"
+        digitContainerClassName="rounded-xl px-2 overflow-hidden"
+        digitClassName="font-bold text-white text-3xl leading-tight text-center tabular-nums min-w-5"
       >
         <Stopwatch.Hour />
         <Stopwatch.Minute />
