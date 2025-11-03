@@ -1,5 +1,11 @@
 import type { StyleProp, TextStyle, ViewProps, ViewStyle } from 'react-native';
 
+type DigitsTuple =
+  | ['daysTens', 'daysUnits']
+  | ['hoursTens', 'hoursUnits']
+  | ['minutesTens', 'minutesUnits']
+  | ['secondsTens', 'secondsUnits'];
+
 /**
  * Props for a segment component.
  * e.g., Hour, Minute, Second, Day, Millisecond

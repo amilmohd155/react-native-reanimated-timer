@@ -1,11 +1,11 @@
 import { forwardRef, useMemo } from 'react';
-import { useRootConfig } from '../../context';
+import { useStyleConfig } from '../../context';
 import { styles } from '../../styles';
 import { Digit } from '../digit';
-import type { SegmentProps } from './type';
+import type { DigitsTuple, SegmentProps } from './type';
 import { Text, View } from '../primitive';
 import { combineClassNames } from '../../utils/style';
-import type { DigitType } from '../../constants';
+import { useTime } from '../../context/time';
 
 /**
  * Segment component that displays two digits side by side.
@@ -19,11 +19,11 @@ export const Segment = forwardRef<
     /**
      * Array of two DigitType representing tens and units respectively
      */
-    value: [DigitType, DigitType];
+    value: DigitsTuple;
   }
 >(({ style, className, digitClassName, digitStyle, value, ...props }, ref) => {
   const { digitContainerClassName, digitContainerStyle, twMerge } =
-    useRootConfig();
+    useStyleConfig();
 
   const containerStyle = useMemo(
     () => [styles.segment, digitContainerStyle, style],
@@ -77,10 +77,9 @@ export const SpecialSegment = forwardRef<
     digitContainerClassName,
     digitContainerStyle,
     twMerge,
-    ...config
-  } = useRootConfig();
+  } = useStyleConfig();
 
-  const digit = config[type];
+  const digit = useTime((state) => state[type]);
 
   const containerStyle = useMemo(
     () => [digitContainerStyle, style],
