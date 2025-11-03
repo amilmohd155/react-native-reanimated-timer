@@ -1902,6 +1902,7 @@ __metadata:
     "@release-it/conventional-changelog": ^9.0.2
     "@testing-library/react-native": ^13.2.0
     "@types/jest": ^29.5.5
+    "@types/node": ^24.10.0
     "@types/react": ^19.0.12
     commitlint: ^19.6.1
     copyfiles: ^2.4.1
@@ -1916,6 +1917,7 @@ __metadata:
     react-native-builder-bob: ^0.40.11
     react-native-reanimated: ^3.17.5
     react-test-renderer: 19.0.0
+    react-timer-hook: ^4.0.5
     release-it: ^17.10.0
     tailwind-merge: ^3.3.1
     typescript: ^5.9.3
@@ -3521,6 +3523,15 @@ __metadata:
   dependencies:
     undici-types: ~6.21.0
   checksum: 16fb2c1f7be4156578648bfe074c856fca309ac66b9b74f9c5887ce778ce6cbd06d2883eaa397837e3628cddb02a5b0859764c5db0ea24f55f0cfbf54cca06fc
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^24.10.0":
+  version: 24.10.0
+  resolution: "@types/node@npm:24.10.0"
+  dependencies:
+    undici-types: ~7.16.0
+  checksum: 268c843faae02ba88be2441759c26e73038583a7e221fa3000f2c1d7fdc1d06b28cb514fc5367f7cb147c3519cd25ddafdfa1f8566829b91fb096262ebe3f7bb
   languageName: node
   linkType: hard
 
@@ -12023,6 +12034,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-timer-hook@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "react-timer-hook@npm:4.0.5"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 1dd388c5f186eb822c4ec499fb9611b92bb777d5304885236f5c09796bcbf1275936eb98c37297420cf58b2b2eeaffffc06f817da082499f56e84bc61fb3f4e0
+  languageName: node
+  linkType: hard
+
 "react@npm:19.0.0":
   version: 19.0.0
   resolution: "react@npm:19.0.0"
@@ -13852,6 +13872,13 @@ __metadata:
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 46331c7d6016bf85b3e8f20c159d62f5ae471aba1eb3dc52fff35a0259d58dcc7d592d4cc4f00c5f9243fa738a11cfa48bd20203040d4a9e6bc25e807fab7ab3
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 1ef68fc6c5bad200c8b6f17de8e5bc5cfdcadc164ba8d7208cd087cfa8583d922d8316a7fd76c9a658c22b4123d3ff847429185094484fbc65377d695c905857
   languageName: node
   linkType: hard
 
