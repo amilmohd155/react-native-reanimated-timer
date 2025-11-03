@@ -1,10 +1,21 @@
 import { StyleProp, TextProps, TextStyle, ViewStyle } from 'react-native';
 import { AnimatedProps } from 'react-native-reanimated';
 
+type DigitType =
+  | 'daysTens'
+  | 'daysUnits'
+  | 'hoursTens'
+  | 'hoursUnits'
+  | 'minutesTens'
+  | 'minutesUnits'
+  | 'secondsTens'
+  | 'secondsUnits'
+  | 'milliseconds';
+
 /**
  * Represents the AM/PM indicator.
  */
-type AMPM = 'AM' | 'PM' | '';
+type AMPM = '' | 'am' | 'pm';
 
 /**
  * Represents the time format, either 12-hour or 24-hour.
@@ -20,31 +31,6 @@ type Time = {
   minutes: number;
   seconds: number;
   milliseconds: number;
-};
-
-/**
- * Represents the individual digit units for days, hours, minutes, and seconds.
- */
-type TimeUnits = {
-  secondsTens: number;
-  secondsUnits: number;
-  minutesTens: number;
-  minutesUnits: number;
-  hoursTens: number;
-  hoursUnits: number;
-  daysTens: number;
-  daysUnits: number;
-};
-
-/**
- * Represents a formatted time with milliseconds, seconds, minutes, hours, and AM/PM indicator.
- */
-type FormattedTime = {
-  milliseconds: number;
-  seconds: number;
-  minutes: number;
-  hours: number;
-  ampm: AMPM;
 };
 
 /**
@@ -101,7 +87,7 @@ interface AnimationProps {
 /**
  * Common styling props for customizing the appearance of the time display.
  */
-interface CommonStylingProps {
+interface StyleProps {
   /**
    * If true, use tailwind-merge to merge class names instead of replacing them.
    * @default false
@@ -148,9 +134,8 @@ export type {
   AMPM,
   AnimationDirection,
   AnimationProps,
-  CommonStylingProps,
-  FormattedTime,
+  StyleProps,
   Time,
   TimeFormat,
-  TimeUnits,
+  DigitType,
 };
