@@ -1,4 +1,4 @@
-import type { AnimationProps, CommonStylingProps, Time } from '../../types';
+import type { AnimationProps, StyleProps } from '../../types';
 
 /**
  * Stopwatch component props
@@ -10,7 +10,7 @@ import type { AnimationProps, CommonStylingProps, Time } from '../../types';
  * @prop \{Date\} offsetTimestamp - The offset timestamp to start the stopwatch from.
  * @prop \{number\} intervalMs - The interval in milliseconds to update the stopwatch.
  */
-interface StopwatchProps extends AnimationProps, CommonStylingProps {
+interface StopwatchProps extends AnimationProps, StyleProps {
   /**
    * Whether to start the stopwatch automatically.
    * @default false
@@ -60,7 +60,7 @@ interface StopwatchMethods {
   /** Gets the current time snapshot from the stopwatch
    * @returns {Time}
    */
-  getSnapshot: () => Time;
+  // getSnapshot: () => Time;
 }
 
 export { StopwatchMethods, StopwatchProps };

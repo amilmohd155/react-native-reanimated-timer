@@ -1,8 +1,4 @@
-import {
-  Time,
-  type CommonStylingProps,
-  type AnimationProps,
-} from '../../types';
+import type { StyleProps, AnimationProps } from '../../types';
 
 /**
  * The methods available on the Timer component.
@@ -39,19 +35,10 @@ export interface TimerMethods {
   /** Gets the current time snapshot from the stopwatch
    * @returns {Time}
    */
-  getSnapshot: () => Time;
+  // getSnapshot: () => Time;
 }
 
-/**
- * The props for the Timer component.
- * @extends {CommonStylingProps}
- * @extends {AnimationProps}
- * @prop {number} durationMs - The duration in milliseconds for the timer. @required
- * @prop {number} [intervalMs=1000] - The interval in milliseconds to update the timer.
- * @prop {boolean} [autoStart=true] - Whether to start the timer automatically.
- * @prop {() => void} [onExpire] - Callback function to be called when the timer expires.
- */
-export interface TimerProps extends AnimationProps, CommonStylingProps {
+export interface BaseTimerProps {
   /** The duration in milliseconds for the timer.
    * @type {number}
    * @required
@@ -72,6 +59,17 @@ export interface TimerProps extends AnimationProps, CommonStylingProps {
    * @optional
    */
   onExpire?: () => void;
+}
+/**
+ * The props for the Timer component.
+ * @extends {StyleProps}
+ * @extends {AnimationProps}
+ * @prop {number} durationMs - The duration in milliseconds for the timer. @required
+ * @prop {number} [intervalMs=1000] - The interval in milliseconds to update the timer.
+ * @prop {boolean} [autoStart=true] - Whether to start the timer automatically.
+ * @prop {() => void} [onExpire] - Callback function to be called when the timer expires.
+ */
+export interface TimerProps extends AnimationProps, StyleProps, BaseTimerProps {
   /**
    * Children components, typically Timer segments like Day, Hour, Minute, Second, Millisecond.
    * @type {React.ReactNode}
